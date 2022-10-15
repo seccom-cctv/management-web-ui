@@ -1,0 +1,18 @@
+version: 2.1
+
+jobs:
+  test:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Run Jest Tests
+          command: |
+            cd ./management-web-ui
+            yarn
+            yarn test
+            
+workflows:
+  build-and-test:
+    jobs:
+      - test
