@@ -21,6 +21,7 @@ jobs:
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@1.0.3
+  aws-ecr: circleci/aws-ecr@0.0.4
 
 workflows:
   main:
@@ -28,5 +29,12 @@ workflows:
       - test
       - build:
           context: SonarCloud
+          requires:
+            - test
+      - aws-ecr/build_and_push_image:
+          region: ${AWS_REGION}
+          account-url: ${AWS_ECR_ACCOUNT_URL}
+          repo: ${CIRCLE_PROJECT_REPONAME}
+          tag: ${CIRCLE_BUILD_NUM}
           requires:
             - test
