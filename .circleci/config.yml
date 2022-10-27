@@ -36,6 +36,6 @@ workflows:
           account-url: ${AWS_ECR_ACCOUNT_URL}
           repo: ${CIRCLE_PROJECT_REPONAME}
           tag: ${CIRCLE_BUILD_NUM}
-          dockerfile: './management-web-ui/Dockerfile'
+          path: ./management-web-ui/
           requires:
             - test
