@@ -1,18 +1,32 @@
 version: 2.1
 
 jobs:
-  test:
-    machine: true
+  build:
+    docker:
+      - image: 'cimg/node:19.0.0'
     steps:
       - checkout
       - run:
-          name: Run Jest Tests
-          command: |
-            cd ./management-web-ui
-            yarn
-            yarn test
-            
+          name: Install dependencies and build project
+          command: 'cd ./management-web-ui && yarn install --ignore-engines && npm run build'
+      - sonarcloud/scan
+      
+  test:
+    machine:
+      image: ubuntu-2004:202010-01
+    steps:
+      - checkout
+      - run: cd ./management-web-ui && yarn install --ignore-engines && npm run build
+      - run: cd ./management-web-ui && npm run test
+
+orbs:
+  sonarcloud: sonarsource/sonarcloud@1.0.3
+
 workflows:
-  build-and-test:
+  main:
     jobs:
       - test
+      - build:
+          context: SonarCloud
+          requires:
+            - test
