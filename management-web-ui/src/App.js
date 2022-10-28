@@ -13,7 +13,6 @@ function App() {
           <Route path='/' exact element={<Home />} />
         </Routes>
       </BrowserRouter>
-      <Footer />
     </div>
   );
 }
