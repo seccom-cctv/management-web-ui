@@ -7,7 +7,7 @@ import '../BuildingDetails.css';
 
 const BuildingTableRow = (props) => {
     return (
-        <li className="table-row" data-testid="buildingtableRow" data-testid="building-table-row">
+        <li className="table-row" data-testid="building-table-row">
             <div className="col col-11" data-label="Device">{props.device}</div>
             <div className="col col-22" data-label="Date">{props.date}</div>
             <div className="col col-33" data-label="Health">{props.health}</div>
