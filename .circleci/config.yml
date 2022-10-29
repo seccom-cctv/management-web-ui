@@ -21,7 +21,7 @@ jobs:
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@1.0.3
-  aws-ecr: circleci/aws-ecr@8.0.0
+  aws-ecr: circleci/aws-ecr@0.0.5
   aws-ecs: circleci/aws-ecs@3.2.0
 
 workflows:
@@ -32,16 +32,17 @@ workflows:
           context: SonarCloud
           requires:
             - test
-      - aws-ecr/build-and-push-image:
-          path: ./management-web-ui/
+      - aws-ecr/build_and_push_image:
           region: ${AWS_REGION}
-          repo: ${AWS_ECR_ACCOUNT_URL}/${CIRCLE_PROJECT_REPONAME}
-          tag: ${CIRCLE_SHA1}
+          account-url: ${AWS_ECR_ACCOUNT_URL}
+          repo: ${CIRCLE_PROJECT_REPONAME}
+          tag: ${CIRCLE_BUILD_NUM}
+          path: ./management-web-ui/
           requires:
             - test
-      - aws-ecs/deploy-service-update:
-          # requires:
-          #   - aws-ecr/build-and-push-image
-          family: ${CIRCLE_PROJECT_REPONAME}-service
-          cluster: ${CIRCLE_PROJECT_REPONAME}-cluster
-          container-image-name-updates: 'container=${CIRCLE_PROJECT_REPONAME}-service,tag=${CIRCLE_SHA1}'
+      # - aws-ecs/deploy-service-update:
+      #     # requires:
+      #     #   - aws-ecr/build-and-push-image
+      #     family: ${CIRCLE_PROJECT_REPONAME}-service
+      #     cluster: ${CIRCLE_PROJECT_REPONAME}-cluster
+      #     container-image-name-updates: 'container=${CIRCLE_PROJECT_REPONAME}-service,tag=${CIRCLE_SHA1}'
