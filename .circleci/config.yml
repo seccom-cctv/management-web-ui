@@ -40,8 +40,8 @@ workflows:
           requires:
             - test
       - aws-ecs/deploy-service-update:
-          requires:
-            - aws-ecr/build_and_push_image
+          requires:_
+            - aws-ecr/buildand_push_image
           family: '${CIRCLE_PROJECT_REPONAME}-service'
           cluster: '${CIRCLE_PROJECT_REPONAME}-cluster'
           container-image-name-updates: 'container=${CIRCLE_PROJECT_REPONAME}-service,tag=${CIRCLE_SHA1}'
