@@ -3,7 +3,7 @@ import BuildingTableRow from './components/BuildingTableRow';
 
 const BuildingDetails = () => {
     return (
-        <div className='building-details'>
+        <div className='building-details' data-testid="building-details">
             <h2 className='building-details-header'>Building Details</h2>
             <div className='building-details-content'>
                 <div className='building-details-content-items'>

@@ -43,7 +43,7 @@ const Buildings = () => {
     }
 
     return (
-        <div className="buildings">
+        <div className="buildings" data-testid="buildings">
             <h2 className="buildings-header">Manage Buildings</h2>
             <div className='building-list'>
                 <BuildingCard text="Building 3" onClick={redirectToBuilding} />
