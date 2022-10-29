@@ -12,7 +12,7 @@ const Companies = () => {
                         <h5>Name:</h5>
                         <p>CompanyYYW</p>
                     </div>
-                    <div className="companies-details-item" style={{marginTop: '2rem'}}>
+                    <div className="companies-details-item" style={{ marginTop: '2rem' }}>
                         <h5>Date:</h5>
                         <p>10/29/2022</p>
                     </div>
@@ -22,15 +22,15 @@ const Companies = () => {
                         <h5>Active Cameras:</h5>
                         <p>0</p>
                     </div>
-                    <div className="companies-details-item" style={{marginTop: '2rem'}}>
+                    <div className="companies-details-item" style={{ marginTop: '2rem' }}>
                         <h5>Users:</h5>
                         <p>0</p>
                     </div>
                 </div>
             </div>
             <div className='companies-buttons'>
-                <AwesomeButton type="secondary" onPress={() => {setTimeout(() => window.location.replace("/users"), 1500)}}>Manage Users</AwesomeButton>
-                <AwesomeButton type="secondary">Manage Buildings</AwesomeButton>
+                <AwesomeButton type="secondary" onPress={() => { setTimeout(() => window.location.replace("/users"), 1500) }}>Manage Users</AwesomeButton>
+                <AwesomeButton type="secondary" onPress={() => { setTimeout(() => window.location.replace("/buildings"), 1500) }}>Manage Buildings</AwesomeButton>
                 <AwesomeButton type="secondary">Manage Cameras</AwesomeButton>
             </div>
         </div>
