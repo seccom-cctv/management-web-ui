@@ -5,7 +5,7 @@ import './Home.css';
 import { useState } from 'react';
 import TableRow from './components/TableRow';
 import axios from 'axios';
-import { createSearchParams, Navigate, useNavigate } from 'react-router-dom';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 
 const Home = () => {
 
@@ -67,6 +67,7 @@ const Home = () => {
 
     const handleTableRowCLick = (k) => {
         setKey(k);
+        console.log(key);
         navigate({
             pathname: "/companies",
             search: createSearchParams({
