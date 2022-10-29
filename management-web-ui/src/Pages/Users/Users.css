@@ -1,0 +1,21 @@
+.users {
+    padding: 120px 8rem 2rem 8rem;
+}
+
+.users-header {
+    width: 100%;
+    text-align: center;
+    font-size: 2.2rem;
+}
+
+.users-list {
+    width: 20%;
+    margin: 3rem auto;
+}
+
+.users-list-item {
+    margin-top: 2rem;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
