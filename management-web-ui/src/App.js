@@ -5,6 +5,7 @@ import Navbar from './components/Navbar/Navbar';
 import Companies from './Pages/Companies/Companies';
 import Users from './Pages/Users/Users';
 import Buildings from './Pages/Buildings/Buildings';
+import BuildingDetails from './Pages/BuildingDetails/BuildingDetails';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path='/companies' element={<Companies />} />
           <Route path='/users' element={<Users />} />
           <Route path='/buildings' element={<Buildings />} />
+          <Route path='/building' element={<BuildingDetails />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -37,15 +37,20 @@ const Buildings = () => {
     const CloseModal = () => {
         setVisible(false);
     }
+
+    const redirectToBuilding = () => {
+        setTimeout(() => window.location.replace("/building"), 500);
+    }
+
     return (
         <div className="buildings">
             <h2 className="buildings-header">Manage Buildings</h2>
             <div className='building-list'>
-                <BuildingCard text="Building 3" />
-                <BuildingCard text="Building 3" />
-                <BuildingCard text="Building 3" />
-                <BuildingCard text="Building 3" />
-                <BuildingCard text="Building 3" />
+                <BuildingCard text="Building 3" onClick={redirectToBuilding} />
+                <BuildingCard text="Building 3" onClick={redirectToBuilding} />
+                <BuildingCard text="Building 3" onClick={redirectToBuilding} />
+                <BuildingCard text="Building 3" onClick={redirectToBuilding} />
+                <BuildingCard text="Building 3" onClick={redirectToBuilding} />
                 {buildingsList}
                 <MoreBuildingsCard text="New Building" onClick={OpenModal} />
                 <Modal visible={visible} width="400" height="280" effect="fadeInDown" onClickAway={CloseModal}>
