@@ -1,8 +1,12 @@
 
 import { AwesomeButton } from "react-awesome-button";
+import { useSearchParams } from "react-router-dom";
 import './Companies.css';
 
 const Companies = () => {
+    const [searchParams] = useSearchParams();
+    const name = searchParams.get("key");
+
     return (
         <div className='companies'>
             <h2 className="companies-header">Company Details</h2>
@@ -10,7 +14,7 @@ const Companies = () => {
                 <div>
                     <div className="companies-details-item">
                         <h5>Name:</h5>
-                        <p>CompanyYYW</p>
+                        <p>{name}</p>
                     </div>
                     <div className="companies-details-item" style={{marginTop: '2rem'}}>
                         <h5>Date:</h5>

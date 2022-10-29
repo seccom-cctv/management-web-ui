@@ -8,7 +8,7 @@ const TableRow = (props) => {
             <div className="col col-2" data-label="Buildings">{props.buildings}</div>
             <div className="col col-3" data-label="Cameras">{props.cameras}</div>
             <div className="col col-4" data-label="Users">{props.users}</div>
-            <div className="col col-5 col-icon" data-label="Details"><FontAwesomeIcon icon={faExternalLinkAlt} /></div>
+            <div className="col col-5 col-icon" data-label="Details"><FontAwesomeIcon icon={faExternalLinkAlt} onClick={props.onClick}/></div>
         </li>
     )
 }
