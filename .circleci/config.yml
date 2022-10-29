@@ -21,7 +21,7 @@ jobs:
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@1.0.3
-  aws-ecr: circleci/aws-ecr@8.1.0
+  aws-ecr: circleci/aws-ecr@8.0.0
   # aws-ecs: circleci/aws-ecs@3.2.0
 
 workflows:
