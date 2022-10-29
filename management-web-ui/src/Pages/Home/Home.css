@@ -38,6 +38,7 @@
 }
 
 .company-modal-buttons {
+    margin-top: 1rem;
     width: 40%;
     margin-left: 60%;
     display: flex;
@@ -111,6 +112,6 @@
    }
 }
 
-#company-name {
+#company-name, #company-address, #company-phone, #company-email {
     padding: 0.2rem;
 }

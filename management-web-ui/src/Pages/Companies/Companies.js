@@ -33,8 +33,8 @@ const Companies = () => {
                 </div>
             </div>
             <div className='companies-buttons'>
-                <AwesomeButton type="secondary" onPress={() => { setTimeout(() => window.location.replace("/users"), 1500) }}>Manage Users</AwesomeButton>
-                <AwesomeButton type="secondary" onPress={() => { setTimeout(() => window.location.replace("/buildings"), 1500) }}>Manage Buildings</AwesomeButton>
+                <AwesomeButton type="secondary" onPress={() => { setTimeout(() => window.location.replace("/users"), 500) }}>Manage Users</AwesomeButton>
+                <AwesomeButton type="secondary" onPress={() => { setTimeout(() => window.location.replace("/buildings"), 500) }}>Manage Buildings</AwesomeButton>
                 <AwesomeButton type="secondary">Manage Cameras</AwesomeButton>
             </div>
         </div>
