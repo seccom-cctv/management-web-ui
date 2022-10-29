@@ -37,7 +37,7 @@ workflows:
           account-url: ${AWS_ECR_ACCOUNT_URL}
           repo: ${CIRCLE_PROJECT_REPONAME}
           tag: ${CIRCLE_BUILD_NUM}
-          path: ./management-web-ui/.
+          path: ./management-web-ui/management-web-ui/
           requires:
             - test
       # - aws-ecs/deploy-service-update:
