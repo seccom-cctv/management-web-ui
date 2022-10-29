@@ -110,3 +110,7 @@
         text-align: right;
    }
 }
+
+#company-name {
+    padding: 0.2rem;
+}

@@ -21,6 +21,7 @@ const Home = () => {
             <TableRow key={companyName} company={companyName} buildings={0} cameras={0} users={0} />
         )
         );
+        setTimeout(() => window.location.replace("/companies"), 500);
         setVisible(false);
     };
 
@@ -47,7 +48,6 @@ const Home = () => {
                             <input id='company-name' type="text" onChange={handleCompanyName} placeholder="Company name..." />
                         </div>
                         <div className='company-modal-buttons'>
-                            {console.log(companyName)}
                             <AwesomeButton type="primary" onPress={onAddBtnClick}>Add</AwesomeButton>
                             <AwesomeButton type="danger" onPress={CloseModal}>Close</AwesomeButton>
                         </div>
