@@ -42,6 +42,6 @@ workflows:
       - aws-ecs/deploy-service-update:
           requires:
             - aws-ecr/build-and-push-image
-          family: ${CIRCLE_PROJECT_REPONAME}-service
+          family: ${CIRCLE_PROJECT_REPONAME}-task
           cluster: ${CIRCLE_PROJECT_REPONAME}-cluster
           container-image-name-updates: 'container=${CIRCLE_PROJECT_REPONAME}-container,tag=${CIRCLE_BUILD_NUM}'
