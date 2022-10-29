@@ -3,7 +3,7 @@ import './MoreBuildingsCard.css';
 
 const MoreBuildingsCard = (props) => {
     return (
-        <div className='building-card-wrapper'>
+        <div className='building-card-wrapper' onClick={props.onClick}>
             <div className='building-card'>
                 <img src={plus}></img>
             </div>

@@ -14,3 +14,28 @@
     flex-direction: row;
     flex-wrap: wrap;
 }
+
+.building-modal-title {
+    padding: 1rem 0.5rem 2rem 0.5rem;
+}
+
+.building-modal-buttons {
+    width: 40%;
+    margin-left: 60%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.building-modal-content {
+    padding: 0 0.5rem 1rem 0.5rem;
+}
+
+.building-modal-content label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.building-name-error {
+    color: red;
+    font-size: 14px;
+}
