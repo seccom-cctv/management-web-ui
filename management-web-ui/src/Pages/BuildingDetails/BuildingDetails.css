@@ -61,3 +61,33 @@
     justify-content: flex-end;
     margin-bottom: 2rem;
 }
+
+.device-modal-title {
+    padding: 1rem 0.5rem 2rem 0.5rem;
+}
+
+.device-modal-buttons {
+    margin-top: 1rem;
+    width: 40%;
+    margin-left: 60%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.device-modal-content {
+    padding: 0 0.5rem 1rem 0.5rem;
+}
+
+.device-modal-content label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+#device-type {
+    width: 12rem;
+}
+
+#device-type, #device-address {
+    padding: 0.2rem;
+    outline: none;
+}

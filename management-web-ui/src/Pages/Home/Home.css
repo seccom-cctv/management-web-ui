@@ -114,4 +114,5 @@
 
 #company-name, #company-address, #company-phone, #company-email {
     padding: 0.2rem;
+    outline: none;
 }
