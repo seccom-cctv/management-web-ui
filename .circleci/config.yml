@@ -39,9 +39,14 @@ workflows:
           tag: ${CIRCLE_BUILD_NUM}
           requires:
             - test
-      - aws-ecs/deploy-service-update:
-          requires:
-            - aws-ecr/build-and-push-image
-          family: ${CIRCLE_PROJECT_REPONAME}-task
-          cluster: ${CIRCLE_PROJECT_REPONAME}-cluster
-          container-image-name-updates: 'container=${CIRCLE_PROJECT_REPONAME}-container,tag=67'
+          filters:
+            branches:
+              only:
+                - main
+                - develop
+      # - aws-ecs/deploy-service-update:
+      #     requires:
+      #       - aws-ecr/build-and-push-image
+      #     family: ${CIRCLE_PROJECT_REPONAME}-task
+      #     cluster: ${CIRCLE_PROJECT_REPONAME}-cluster
+      #     container-image-name-updates: 'container=${CIRCLE_PROJECT_REPONAME}-container,tag=67'
