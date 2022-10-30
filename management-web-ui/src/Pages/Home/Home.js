@@ -21,11 +21,12 @@ const Home = () => {
         fetch('http://localhost:8082/v1/company/', requestOptions)
             .then(response => response.json())
             .then(data => {
-                data.map((info) => {
+                data.forEach((info) => {
                     result.push(<TableRow company={info.name} address={info.address} buildings={0} cameras={0} users={0} onClick={() => { handleTableRowCLick(info.name) }} />);
                 })
                 setInfo(result);
             });
+            // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const [visible, setVisible] = useState(false);
@@ -69,9 +70,9 @@ const Home = () => {
         fetch('http://localhost:8082/v1/company/', requestOptions)
             .then(response => {
                 response.json();
-                if (response.status == 200) {
+                if (parseInt(response.status) === 200) {
                     setCompanyList(companyList.concat(
-                        <TableRow key={companyName} company={companyName} buildings={0} cameras={0} users={0} />
+                        <TableRow key={companyName} address={companyAddress} company={companyName} buildings={0} cameras={0} users={0} />
                     )
                     );
                     toast.info('New Company Created !', {
