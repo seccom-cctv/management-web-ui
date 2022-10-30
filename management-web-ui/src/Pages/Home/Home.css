@@ -72,11 +72,15 @@
 }
 
 .responsive-table .col-4 {
-    flex-basis: 15%;
+    flex-basis: 10%;
 }
 
 .responsive-table .col-5 {
-    flex-basis: 25%;
+    flex-basis: 10%;
+}
+
+.responsive-table .col-6 {
+    flex-basis: 15%;
 }
 
 .responsive-table .col-icon:hover {
