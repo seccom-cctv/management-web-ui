@@ -91,3 +91,16 @@
     padding: 0.2rem;
     outline: none;
 }
+
+.confirm-modal-text {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-size: 18px;
+}
+
+.confirm-modal-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
