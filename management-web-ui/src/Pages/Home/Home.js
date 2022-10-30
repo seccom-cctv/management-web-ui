@@ -2,13 +2,31 @@ import { AwesomeButton } from 'react-awesome-button';
 import 'react-awesome-button/dist/styles.css';
 import Modal from 'react-awesome-modal';
 import './Home.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TableRow from './components/TableRow';
 import { createSearchParams, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Home = () => {
+
+    const [info, setInfo] = useState(null);
+
+    useEffect(() => {
+        let result = [];
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        };
+        fetch('http://localhost:8082/v1/company/', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                data.map((info) => {
+                    result.push(<TableRow company={info.name} buildings={0} cameras={0} users={0} onClick={() => { handleTableRowCLick(info.name) }} />);
+                })
+                setInfo(result);
+            });
+    }, []);
 
     const [visible, setVisible] = useState(false);
     const [companyList, setCompanyList] = useState([]);
@@ -137,10 +155,7 @@ const Home = () => {
                         <div className="col col-4">Users</div>
                         <div className="col col-5">Manage</div>
                     </li>
-                    <TableRow key="CompanyX" company="CompanyX" buildings={3} cameras={10} users={3} onClick={() => { handleTableRowCLick("CompanyX") }} />
-                    <TableRow key="CompanyY" company="CompanyY" buildings={5} cameras={20} users={5} onClick={() => { handleTableRowCLick("CompanyY") }} />
-                    <TableRow key="CompanyZ" company="CompanyZ" buildings={2} cameras={8} users={4} onClick={() => { handleTableRowCLick("CompanyZ") }} />
-                    <TableRow key="CompanyW" company="CompanyW" buildings={1} cameras={12} users={3} onClick={() => { handleTableRowCLick("CompanyW") }} />
+                    {info}
                     {companyList}
                 </ul>
             </div>
