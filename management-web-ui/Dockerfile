@@ -1,5 +1,5 @@
 # --- reactjs ---
-FROM node:16.14.2
+FROM node:16.14.2-bullseye-slim
 
 # set working directory
 WORKDIR /management-web-ui

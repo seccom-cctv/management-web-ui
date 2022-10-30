@@ -22,6 +22,7 @@ jobs:
 orbs:
   sonarcloud: sonarsource/sonarcloud@1.0.3
   aws-ecr: circleci/aws-ecr@8.1.3
+  aws-ecs: circleci/aws-ecs@3.2.0
 
 workflows:
   main:
@@ -38,3 +39,14 @@ workflows:
           tag: ${CIRCLE_BUILD_NUM}
           requires:
             - test
+          filters:
+            branches:
+              only:
+                - main
+                - develop
+      # - aws-ecs/deploy-service-update:
+      #     requires:
+      #       - aws-ecr/build-and-push-image
+      #     family: ${CIRCLE_PROJECT_REPONAME}-task
+      #     cluster: ${CIRCLE_PROJECT_REPONAME}-cluster
+      #     container-image-name-updates: 'container=${CIRCLE_PROJECT_REPONAME}-container,tag=67'
