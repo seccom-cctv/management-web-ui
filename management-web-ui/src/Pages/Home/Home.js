@@ -22,7 +22,7 @@ const Home = () => {
             .then(response => response.json())
             .then(data => {
                 data.map((info) => {
-                    result.push(<TableRow company={info.name} buildings={0} cameras={0} users={0} onClick={() => { handleTableRowCLick(info.name) }} />);
+                    result.push(<TableRow company={info.name} address={info.address} buildings={0} cameras={0} users={0} onClick={() => { handleTableRowCLick(info.name) }} />);
                 })
                 setInfo(result);
             });
@@ -150,10 +150,11 @@ const Home = () => {
                 <ul className="responsive-table">
                     <li className="table-header">
                         <div className="col col-1">Name</div>
+                        <div className="col col-3">Address</div>
                         <div className="col col-2">Buildings</div>
-                        <div className="col col-3">Cameras</div>
-                        <div className="col col-4">Users</div>
-                        <div className="col col-5">Manage</div>
+                        <div className="col col-4">Cameras</div>
+                        <div className="col col-5">Users</div>
+                        <div className="col col-6">Manage</div>
                     </li>
                     {info}
                     {companyList}
