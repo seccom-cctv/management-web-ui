@@ -147,7 +147,7 @@ const Home = () => {
                 </div>
             </div>
             <div className='companies-list'>
-                <ul className="responsive-table">
+                <ul className="responsive-table" style={{paddingLeft: 0}}>
                     <li className="table-header">
                         <div className="col col-1">Name</div>
                         <div className="col col-3">Address</div>
