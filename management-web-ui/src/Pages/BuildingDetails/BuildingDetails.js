@@ -1,5 +1,7 @@
 import './BuildingDetails.css';
 import BuildingTableRow from './components/BuildingTableRow';
+import { AwesomeButton } from 'react-awesome-button';
+import 'react-awesome-button/dist/styles.css';
 
 const BuildingDetails = () => {
     return (
@@ -14,6 +16,9 @@ const BuildingDetails = () => {
                     <h5>Location:</h5>
                     <p>Aveiro</p>
                 </div>
+            </div>
+            <div className='add-new-camara-button'>
+            <AwesomeButton type="primary" onPress={null}>New Device</AwesomeButton>
             </div>
             <ul className="responsive-table" style={{paddingLeft: 0}}>
                 <li className="table-header">

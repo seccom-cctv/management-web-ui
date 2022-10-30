@@ -54,3 +54,10 @@
     font-size: 1.05rem;
     transition: 0.2s;
 }
+
+.add-new-camara-button {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 2rem;
+}
