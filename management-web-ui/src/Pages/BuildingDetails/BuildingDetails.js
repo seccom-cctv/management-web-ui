@@ -8,9 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useState } from 'react';
 
 const BuildingDetails = () => {
-    const notify = (e) => toast(e);
     const [visible, setVisible] = useState(false);
-    const [visibleConfirm, setVisibleConfirm] = useState(false);
     const [deviceType, setDeviceType] = useState("camera");
     const [deviceAddress, setDeviceAddress] = useState("");
 
@@ -20,6 +18,7 @@ const BuildingDetails = () => {
 
     const handleDeviceAddress = (event) => {
         var str = event.target.value;
+        console.log(deviceAddress);
         setDeviceAddress(str);
     }
 
