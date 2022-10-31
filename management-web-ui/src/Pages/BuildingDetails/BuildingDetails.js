@@ -3,30 +3,105 @@ import BuildingTableRow from './components/BuildingTableRow';
 import { AwesomeButton } from 'react-awesome-button';
 import Modal from 'react-awesome-modal';
 import 'react-awesome-button/dist/styles.css';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const BuildingDetails = () => {
     const [visible, setVisible] = useState(false);
     const [deviceType, setDeviceType] = useState("camera");
-    const [deviceAddress, setDeviceAddress] = useState("");
+    const [deviceName, setDeviceName] = useState("");
+    //const [deviceAddress, setDeviceAddress] = useState("");
+    const [devicesList, setDeviceList] = useState(null);
+    const [building, setBuilding] = useState(null);
+
+    const location = useLocation();
+
+    useEffect(() => {
+
+        let result = [];
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        };
+        fetch('http://localhost:8082/v1/device/?building_id=' + location.state.building.id, requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach((info) => {
+                    result.push(<BuildingTableRow key={info.id} device={info.name} date="29/10/2022" health="10%" onClick={()=>{removeDevice(info.id)}}/>);
+                });
+                setDeviceList(result);
+            });
+        setBuilding(location.state.building);
+    }, [location])
+
+    const addNewDevice = () => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name: deviceName,
+                type: deviceType,
+                building_id: location.state.building.id
+            })
+        };
+        fetch('http://localhost:8082/v1/device/', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    setDeviceList(devicesList.concat(
+                        <BuildingTableRow key={data.id} device={data.name} date="29/10/2022" health="10%" onClick={()=>{removeDevice(data.id)}}/>
+                    )
+                    );
+                    toast.info('New Device Created !', {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 2000
+                    });
+                } else {
+                    toast.error('Something went wrong !', {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 2000
+                    });
+                }
+            })
+        setVisible(false);
+    }
 
     const handleDeviceType = (newDevice) => {
         setDeviceType(newDevice);
     }
 
-    const handleDeviceAddress = (event) => {
+    const handleDeviceName = (event) => {
         var str = event.target.value;
-        console.log(deviceAddress);
-        setDeviceAddress(str);
+        setDeviceName(str);
     }
 
-    const showToastMessage = () => {
-        toast.error('Device Removed !', {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1800
-        });
+    // const handleDeviceAddress = (event) => {
+    //     var str = event.target.value;
+    //     setDeviceAddress(str);
+    // }
+
+    const removeDevice = (id) => {
+        const requestOptions = {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+        };
+        fetch('http://localhost:8082/v1/device/' + id, requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    toast.info('Device Removed !', {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 2000
+                    });
+                } else {
+                    toast.error('Something went wrong !', {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 2000
+                    });
+                }
+            })
     };
 
     const OpenModal = () => {
@@ -38,57 +113,59 @@ const BuildingDetails = () => {
     }
 
     return (
-        <div className='building-details' data-testid="building-details">
-            <Modal visible={visible} width="400" height="350" effect="fadeInDown" onClickAway={CloseModal}>
-                <div className='device-modal'>
-                    <h1 className='device-modal-title'>Add New Device</h1>
-                    <div className='device-modal-content'>
-                        <label htmlFor="device-name">Type</label>
-                        <select
-                            id="device-type"
-                            onChange={(event) => handleDeviceType(event.target.value)}
-                            value={deviceType}
-                        >
-                            <option value="camera">Camera</option>
-                            <option value="alarm">Alarm</option>
-                        </select>
+        <>
+            <ToastContainer />
+            <div className='building-details' data-testid="building-details">
+                <Modal visible={visible} width="400" height="350" effect="fadeInDown" onClickAway={CloseModal}>
+                    <div className='device-modal'>
+                        <h1 className='device-modal-title'>Add New Device</h1>
+                        <div className='device-modal-content'>
+                            <label htmlFor="device-name">Type</label>
+                            <select
+                                id="device-type"
+                                onChange={(event) => handleDeviceType(event.target.value)}
+                                value={deviceType}
+                            >
+                                <option value="camera">Camera</option>
+                                <option value="alarm">Alarm</option>
+                            </select>
+                        </div>
+                        <div className='device-modal-content'>
+                                <label htmlFor="device-name">Name</label>
+                                <input id='device-name' type="text" onChange={handleDeviceName} placeholder="Device name..." />
+                            </div>
+                        <div className='device-modal-buttons'>
+                            <AwesomeButton type="primary" onPress={addNewDevice}>Add</AwesomeButton>
+                            <AwesomeButton type="danger" onPress={CloseModal}>Close</AwesomeButton>
+                        </div>
                     </div>
-                    <div className='device-modal-content'>
-                        <label htmlFor="device-address">Address</label>
-                        <input id='device-address' type="text" onChange={handleDeviceAddress} placeholder="Device address..." />
+                </Modal>
+                <h2 className='building-details-header'>Building Details</h2>
+                <div className='building-details-content'>
+                    <div className='building-details-content-items'>
+                        <h5>Name:</h5>
+                        <p>{building!==null ? building.name : ""}</p>
                     </div>
-                    <div className='device-modal-buttons'>
-                        <AwesomeButton type="primary" onPress={null}>Add</AwesomeButton>
-                        <AwesomeButton type="danger" onPress={CloseModal}>Close</AwesomeButton>
+                    <div className='building-details-content-items'>
+                        <h5>Location:</h5>
+                        <p>{building!==null ? building.address : ""}</p>
                     </div>
                 </div>
-            </Modal>
-            <h2 className='building-details-header'>Building Details</h2>
-            <div className='building-details-content'>
-                <div className='building-details-content-items'>
-                    <h5>Name:</h5>
-                    <p>Building 1</p>
+                <div className='add-new-camara-button'>
+                    <AwesomeButton type="primary" onPress={OpenModal}>New Device</AwesomeButton>
                 </div>
-                <div className='building-details-content-items'>
-                    <h5>Location:</h5>
-                    <p>Aveiro</p>
-                </div>
+                <ul className="responsive-table" style={{ paddingLeft: 0 }}>
+                    <li className="table-header">
+                        <div className="col col-11">Device</div>
+                        <div className="col col-22">Date</div>
+                        <div className="col col-33">Health</div>
+                        <div className="col col-44">Logs</div>
+                        <div className="col col-55">Actions</div>
+                    </li>
+                    {devicesList}
+                </ul>
             </div>
-            <div className='add-new-camara-button'>
-                <AwesomeButton type="primary" onPress={OpenModal}>New Device</AwesomeButton>
-            </div>
-            <ul className="responsive-table" style={{ paddingLeft: 0 }}>
-                <li className="table-header">
-                    <div className="col col-11">Device</div>
-                    <div className="col col-22">Date</div>
-                    <div className="col col-33">Health</div>
-                    <div className="col col-44">Logs</div>
-                    <div className="col col-55">Actions</div>
-                </li>
-                <BuildingTableRow device="Camera" date="29/10/2022" health="10%" onClick={showToastMessage} />
-                <BuildingTableRow device="Alarm" date="29/10/2022" health="45%" onClick={showToastMessage} />
-            </ul>
-        </div>
+        </>
     )
 }
 

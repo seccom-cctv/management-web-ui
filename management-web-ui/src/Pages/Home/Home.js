@@ -4,7 +4,6 @@ import Modal from 'react-awesome-modal';
 import './Home.css';
 import { useEffect, useState } from 'react';
 import TableRow from './components/TableRow';
-import { createSearchParams, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -22,7 +21,7 @@ const Home = () => {
             .then(response => response.json())
             .then(data => {
                 data.forEach((info) => {
-                    result.push(<TableRow company={info.name} address={info.address} buildings={0} cameras={0} users={0} onClick={() => { handleTableRowCLick(info.name) }} />);
+                    result.push(<TableRow id={info.id} company={info.name} address={info.address} buildings={0} cameras={0} users={0}/>);
                 })
                 setInfo(result);
             });
@@ -35,9 +34,6 @@ const Home = () => {
     const [companyAddress, setCompanyAddress] = useState("");
     const [companyPhone, setCompanyPhone] = useState("");
     const [companyEmail, setCompanyEmail] = useState("");
-
-    const navigate = useNavigate();
-    const [key, setKey] = useState("");
 
     const handleCompanyName = (event) => {
         var str = event.target.value;
@@ -56,7 +52,7 @@ const Home = () => {
         setCompanyEmail(str);
     }
 
-    const onAddBtnClick = event => {
+    const onAddBtnClick = () => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -68,11 +64,11 @@ const Home = () => {
             })
         };
         fetch('http://localhost:8082/v1/company/', requestOptions)
-            .then(response => {
-                response.json();
-                if (parseInt(response.status) === 200) {
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
                     setCompanyList(companyList.concat(
-                        <TableRow key={companyName} address={companyAddress} company={companyName} buildings={0} cameras={0} users={0} />
+                        <TableRow key={data.id} id={data.id} address={companyAddress} company={companyName} buildings={0} cameras={0} users={0} />
                     )
                     );
                     toast.info('New Company Created !', {
@@ -100,17 +96,6 @@ const Home = () => {
 
     const CloseModal = () => {
         setVisible(false);
-    }
-
-    const handleTableRowCLick = (k) => {
-        setKey(k);
-        console.log(key);
-        navigate({
-            pathname: "/companies",
-            search: createSearchParams({
-                key: k
-            }).toString()
-        });
     }
 
     return (
