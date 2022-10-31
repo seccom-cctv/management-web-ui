@@ -35,7 +35,7 @@ const Buildings = () => {
                 });
                 setBuildingsList(result);
             });
-    }, [])
+    }, [location])
 
     const onAddBtnClick = (event) => {
         if (buildingName !== "" && buildingAddress!==""){

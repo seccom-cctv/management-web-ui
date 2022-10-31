@@ -20,7 +20,7 @@ const Companies = () => {
             .then(data => {
                 setCompany(data);
             });
-    }, [])
+    }, [location])
 
     return (
         <div className='companies'>

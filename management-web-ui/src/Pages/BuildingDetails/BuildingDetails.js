@@ -33,16 +33,16 @@ const BuildingDetails = () => {
                 setDeviceList(result);
             });
         setBuilding(location.state.building);
-    }, [])
+    }, [location])
 
     const handleDeviceType = (newDevice) => {
         setDeviceType(newDevice);
     }
 
-    const handleDeviceAddress = (event) => {
-        var str = event.target.value;
-        //setDeviceAddress(str);
-    }
+    // const handleDeviceAddress = (event) => {
+    //     var str = event.target.value;
+    //     setDeviceAddress(str);
+    // }
 
     const showToastMessage = () => {
         toast.error('Device Removed !', {
@@ -77,7 +77,7 @@ const BuildingDetails = () => {
                     </div>
                     <div className='device-modal-content'>
                         <label htmlFor="device-address">Address</label>
-                        <input id='device-address' type="text" onChange={handleDeviceAddress} placeholder="Device address..." />
+                        <input id='device-address' type="text" placeholder="Device address..." />
                     </div>
                     <div className='device-modal-buttons'>
                         <AwesomeButton type="primary" onPress={null}>Add</AwesomeButton>

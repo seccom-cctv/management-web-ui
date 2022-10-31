@@ -4,7 +4,6 @@ import Modal from 'react-awesome-modal';
 import './Home.css';
 import { useEffect, useState } from 'react';
 import TableRow from './components/TableRow';
-import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
