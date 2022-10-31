@@ -21,11 +21,11 @@ const Home = () => {
             .then(response => response.json())
             .then(data => {
                 data.forEach((info) => {
-                    result.push(<TableRow id={info.id} company={info.name} address={info.address} buildings={0} cameras={0} users={0}/>);
+                    result.push(<TableRow id={info.id} company={info.name} address={info.address} buildings={0} cameras={0} users={0} />);
                 })
                 setInfo(result);
             });
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const [visible, setVisible] = useState(false);
@@ -51,8 +51,71 @@ const Home = () => {
         var str = event.target.value;
         setCompanyEmail(str);
     }
+    const clearForm = () => {
+        setCompanyName("");
+        setCompanyAddress("");
+        setCompanyPhone("");
+        setCompanyEmail("");
+        setVisible(false);
+    }
+
+    const checkEmail = () => {
+        const testEmail =    /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;
+        return (testEmail.test(companyEmail));
+    }
 
     const onAddBtnClick = () => {
+
+        if (!companyName && !companyAddress && !companyPhone && !companyEmail) {
+            toast.error('Please fill all fields!', {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000
+            });
+
+            clearForm();
+            return;
+        }
+
+        if (!companyName || companyName.length < 3 || companyName === "null") {
+            toast.error('Please provide a valid name!', {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000
+            });
+
+            clearForm();
+            return;
+        }
+        
+        if(!companyEmail || !checkEmail() || companyEmail === "null") {
+            toast.error('Please provide a valid email!', {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000
+            });
+            
+            clearForm();
+            return;
+        }
+
+        if (!companyAddress || companyAddress.length < 5 || companyAddress === "null") {
+            toast.error('Please provide a valid address!', {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000
+            });
+
+            clearForm();
+            return;
+        }
+
+        if (!companyPhone || companyPhone.length < 9 || companyPhone === "null") {
+            toast.error('Please provide a valid phone!', {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000
+            });
+
+            clearForm();
+            return;
+        }
+
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -133,7 +196,7 @@ const Home = () => {
                 </div>
             </div>
             <div className='companies-list'>
-                <ul className="responsive-table" style={{paddingLeft: 0}}>
+                <ul className="responsive-table" style={{ paddingLeft: 0 }}>
                     <li className="table-header">
                         <div className="col col-1">Name</div>
                         <div className="col col-3">Address</div>

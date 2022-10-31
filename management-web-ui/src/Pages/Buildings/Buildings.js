@@ -15,8 +15,6 @@ const Buildings = () => {
     const [buildingsList, setBuildingsList] = useState([]);
     const [buildingName, setBuildingName] = useState("");
     const [buildingAddress, setBuildingAddress] = useState("");
-    const [buildingNameError, setBuildingNameError] = useState(false);
-    const [buildingAddressError, setBuildingAddressError] = useState(false);
 
     const location = useLocation();
 
@@ -31,47 +29,81 @@ const Buildings = () => {
             .then(response => response.json())
             .then(data => {
                 data.forEach((info) => {
-                    result.push(<BuildingCard key={info.name} text={info.name} building={info}/>);
+                    result.push(<BuildingCard key={info.name} text={info.name} building={info} />);
                 });
                 setBuildingsList(result);
             });
     }, [location])
 
+    const clearForm = () => {
+        setBuildingAddress("");
+        setBuildingName("");
+        setVisible(false);
+    }
+
     const onAddBtnClick = (event) => {
-        if (buildingName !== "" && buildingAddress!==""){
-            const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name: buildingName,
-                    address: buildingAddress,
-                    company_id: location.state.company[0].id
-                })
-            };
-            fetch('http://localhost:8082/v1/building/', requestOptions)
-                .then(response => response.json())
-                .then(data => {
-                    if (data) {
-                        setBuildingsList(buildingsList.concat(
-                            <BuildingCard key={buildingName} text={buildingName} building={data}/>
-                        )
-                        );
-                        toast.info('New Building Created !', {
-                            position: toast.POSITION.TOP_RIGHT,
-                            autoClose: 2000
-                        });
-                    } else {
-                        toast.error('Something went wrong !', {
-                            position: toast.POSITION.TOP_RIGHT,
-                            autoClose: 2000
-                        });
-                    }
-                })
-            setVisible(false);
-        } else if (buildingName === "")
-            setBuildingNameError(true);
-        else
-            setBuildingAddressError(true);
+
+        if (!buildingAddress && !buildingName) {
+            toast.error('Please fill all fields!', {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000
+            });
+
+            clearForm();
+            return;
+        }
+
+        if (!buildingName || buildingName.length < 3 || buildingName === "null") {
+            toast.error('Please provide a valid name!', {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000
+            });
+
+            clearForm();
+            return;
+        }
+
+        if (!buildingAddress || buildingAddress.length < 5 || buildingAddress === "null") {
+            toast.error('Please provide a valid address!', {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000
+            });
+
+            clearForm();
+            return;
+        }
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name: buildingName,
+                address: buildingAddress,
+                company_id: location.state.company[0].id
+            })
+        };
+        fetch('http://localhost:8082/v1/building/', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    setBuildingsList(buildingsList.concat(
+                        <BuildingCard key={buildingName} text={buildingName} building={data} />
+                    )
+                    );
+                    toast.info('New Building Created !', {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 2000
+                    });
+                } else {
+                    toast.error('Something went wrong !', {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 2000
+                    });
+                }
+            })
+        setBuildingAddress("");
+        setBuildingName("");
+        setVisible(false);
     };
 
     const handleBuildingNameChange = (event) => {
@@ -89,8 +121,6 @@ const Buildings = () => {
     }
 
     const CloseModal = () => {
-        setBuildingNameError(false);
-        setBuildingAddressError(false);
         setVisible(false);
     }
 
@@ -107,13 +137,11 @@ const Buildings = () => {
                             <h1 className='building-modal-title'>Add Building</h1>
                             <div className='building-modal-content'>
                                 <label htmlFor="building-name">Name</label>
-                                <input id='building-name' type="text" onChange={handleBuildingNameChange} placeholder="Building name..." />
-                                {buildingNameError && <p className='building-name-error'>* Building name can't be null</p>}
+                                <input id='building-name' type="text" value={buildingName} onChange={handleBuildingNameChange} placeholder="Building name..." />
                             </div>
                             <div className='building-modal-content'>
                                 <label htmlFor="building-addres">Address</label>
-                                <input id='building-address' type="text" onChange={handleBuildingAddressChange} placeholder="Building address..." />
-                                {buildingAddressError && <p className='building-name-error'>* Building address can't be null</p>}
+                                <input id='building-address' type="text" value={buildingAddress} onChange={handleBuildingAddressChange} placeholder="Building address..." />
                             </div>
                             <div className='building-modal-buttons'>
                                 <AwesomeButton type="primary" onPress={onAddBtnClick}>Add</AwesomeButton>
