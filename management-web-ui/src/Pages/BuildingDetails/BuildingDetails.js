@@ -44,7 +44,7 @@ const BuildingDetails = () => {
 
     const addNewDevice = () => {
 
-        if (!deviceName && deviceName.length < 3 || deviceName === "null") {
+        if (!deviceName || deviceName.length < 3 || deviceName === "null") {
             toast.error('Please fill all fields!', {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2000
