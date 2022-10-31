@@ -101,9 +101,8 @@ const Buildings = () => {
                     });
                 }
             })
-        setBuildingAddress("");
-        setBuildingName("");
-        setVisible(false);
+        
+        clearForm();
     };
 
     const handleBuildingNameChange = (event) => {
@@ -121,6 +120,7 @@ const Buildings = () => {
     }
 
     const CloseModal = () => {
+        clearForm();
         setVisible(false);
     }
 

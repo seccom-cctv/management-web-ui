@@ -29,14 +29,31 @@ const BuildingDetails = () => {
             .then(response => response.json())
             .then(data => {
                 data.forEach((info) => {
-                    result.push(<BuildingTableRow key={info.id} device={info.name} date="29/10/2022" health="10%" onClick={()=>{removeDevice(info.id)}}/>);
+                    result.push(<BuildingTableRow key={info.id} device={info.name} date="29/10/2022" health="10%" onClick={() => { removeDevice(info.id) }} />);
                 });
                 setDeviceList(result);
             });
         setBuilding(location.state.building);
     }, [location])
 
+    const clearForm = () => {
+        setDeviceName("");
+        setDeviceType("camera");
+        setVisible(false);
+    }
+
     const addNewDevice = () => {
+
+        if (!deviceName && deviceName.length < 3 || deviceName === "null") {
+            toast.error('Please fill all fields!', {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000
+            });
+
+            clearForm();
+            return;
+        }
+
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -51,7 +68,7 @@ const BuildingDetails = () => {
             .then(data => {
                 if (data) {
                     setDeviceList(devicesList.concat(
-                        <BuildingTableRow key={data.id} device={data.name} date="29/10/2022" health="10%" onClick={()=>{removeDevice(data.id)}}/>
+                        <BuildingTableRow key={data.id} device={data.name} date="29/10/2022" health="10%" onClick={() => { removeDevice(data.id) }} />
                     )
                     );
                     toast.info('New Device Created !', {
@@ -65,6 +82,8 @@ const BuildingDetails = () => {
                     });
                 }
             })
+
+        clearForm();
         setVisible(false);
     }
 
@@ -105,10 +124,12 @@ const BuildingDetails = () => {
     };
 
     const OpenModal = () => {
+        clearForm();
         setVisible(true);
     }
 
     const CloseModal = () => {
+        clearForm();
         setVisible(false);
     }
 
@@ -131,9 +152,9 @@ const BuildingDetails = () => {
                             </select>
                         </div>
                         <div className='device-modal-content'>
-                                <label htmlFor="device-name">Name</label>
-                                <input id='device-name' type="text" onChange={handleDeviceName} placeholder="Device name..." />
-                            </div>
+                            <label htmlFor="device-name">Name</label>
+                            <input id='device-name' type="text" value={deviceName} onChange={handleDeviceName} placeholder="Device name..." />
+                        </div>
                         <div className='device-modal-buttons'>
                             <AwesomeButton type="primary" onPress={addNewDevice}>Add</AwesomeButton>
                             <AwesomeButton type="danger" onPress={CloseModal}>Close</AwesomeButton>
@@ -144,11 +165,11 @@ const BuildingDetails = () => {
                 <div className='building-details-content'>
                     <div className='building-details-content-items'>
                         <h5>Name:</h5>
-                        <p>{building!==null ? building.name : ""}</p>
+                        <p>{building !== null ? building.name : ""}</p>
                     </div>
                     <div className='building-details-content-items'>
                         <h5>Location:</h5>
-                        <p>{building!==null ? building.address : ""}</p>
+                        <p>{building !== null ? building.address : ""}</p>
                     </div>
                 </div>
                 <div className='add-new-camara-button'>

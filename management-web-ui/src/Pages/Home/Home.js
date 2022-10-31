@@ -158,6 +158,7 @@ const Home = () => {
     }
 
     const CloseModal = () => {
+        clearForm();
         setVisible(false);
     }
 
