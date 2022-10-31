@@ -102,17 +102,6 @@ const Home = () => {
         setVisible(false);
     }
 
-    const handleTableRowCLick = (k) => {
-        setKey(k);
-        console.log(key);
-        navigate({
-            pathname: "/companies",
-            search: createSearchParams({
-                key: k
-            }).toString()
-        });
-    }
-
     return (
         <>
             <ToastContainer />
