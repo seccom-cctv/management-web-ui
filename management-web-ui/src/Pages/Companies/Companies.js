@@ -7,8 +7,9 @@ import { useEffect, useState } from "react";
 const Companies = () => {
     const [company, setCompany] = useState(null);
 
+    const location = useLocation();
+
     useEffect(() => {
-        const location = useLocation();
         // get of company from id
         const requestOptions = {
             method: 'GET',

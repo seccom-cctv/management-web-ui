@@ -15,8 +15,9 @@ const BuildingDetails = () => {
     const [devicesList, setDeviceList] = useState(null);
     const [building, setBuilding] = useState(null);
 
+    const location = useLocation();
+
     useEffect(() => {
-        const location = useLocation();
 
         let result = [];
         const requestOptions = {

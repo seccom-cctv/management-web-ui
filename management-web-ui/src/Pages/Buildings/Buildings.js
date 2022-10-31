@@ -18,8 +18,9 @@ const Buildings = () => {
     const [buildingNameError, setBuildingNameError] = useState(false);
     const [buildingAddressError, setBuildingAddressError] = useState(false);
 
+    const location = useLocation();
+
     useEffect(() => {
-        const location = useLocation();
         // get of company buildings from id
         let result = [];
         const requestOptions = {
