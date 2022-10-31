@@ -11,13 +11,13 @@ import { useLocation } from 'react-router-dom';
 const BuildingDetails = () => {
     const [visible, setVisible] = useState(false);
     const [deviceType, setDeviceType] = useState("camera");
-    const [deviceAddress, setDeviceAddress] = useState("");
+    //const [deviceAddress, setDeviceAddress] = useState("");
     const [devicesList, setDeviceList] = useState(null);
     const [building, setBuilding] = useState(null);
 
-    const location = useLocation();
-
     useEffect(() => {
+        const location = useLocation();
+
         let result = [];
         const requestOptions = {
             method: 'GET',
@@ -40,7 +40,7 @@ const BuildingDetails = () => {
 
     const handleDeviceAddress = (event) => {
         var str = event.target.value;
-        setDeviceAddress(str);
+        //setDeviceAddress(str);
     }
 
     const showToastMessage = () => {

@@ -5,8 +5,8 @@ import MoreBuildingsCard from './components/MoreBuildingsCard';
 import Modal from 'react-awesome-modal';
 import './Buildings.css';
 import { useState, useEffect } from 'react';
-import { useLocation, Link } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Buildings = () => {
@@ -18,9 +18,8 @@ const Buildings = () => {
     const [buildingNameError, setBuildingNameError] = useState(false);
     const [buildingAddressError, setBuildingAddressError] = useState(false);
 
-    const location = useLocation();
-
     useEffect(() => {
+        const location = useLocation();
         // get of company buildings from id
         let result = [];
         const requestOptions = {
@@ -75,12 +74,12 @@ const Buildings = () => {
     };
 
     const handleBuildingNameChange = (event) => {
-        const str = event.target.value;
+        var str = event.target.value;
         setBuildingName(str);
     }
 
     const handleBuildingAddressChange = (event) => {
-        const str = event.target.value;
+        var str = event.target.value;
         setBuildingAddress(str);
     }
 

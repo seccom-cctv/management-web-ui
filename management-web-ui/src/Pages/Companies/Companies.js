@@ -5,10 +5,10 @@ import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const Companies = () => {
-    const location = useLocation();
     const [company, setCompany] = useState(null);
 
     useEffect(() => {
+        const location = useLocation();
         // get of company from id
         const requestOptions = {
             method: 'GET',

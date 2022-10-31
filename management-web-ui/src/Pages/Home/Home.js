@@ -4,7 +4,7 @@ import Modal from 'react-awesome-modal';
 import './Home.css';
 import { useEffect, useState } from 'react';
 import TableRow from './components/TableRow';
-import { createSearchParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -35,9 +35,6 @@ const Home = () => {
     const [companyAddress, setCompanyAddress] = useState("");
     const [companyPhone, setCompanyPhone] = useState("");
     const [companyEmail, setCompanyEmail] = useState("");
-
-    const navigate = useNavigate();
-    const [key, setKey] = useState("");
 
     const handleCompanyName = (event) => {
         var str = event.target.value;
