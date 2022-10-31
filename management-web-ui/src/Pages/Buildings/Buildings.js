@@ -6,7 +6,7 @@ import Modal from 'react-awesome-modal';
 import './Buildings.css';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Buildings = () => {
@@ -49,11 +49,11 @@ const Buildings = () => {
                 })
             };
             fetch('http://localhost:8082/v1/building/', requestOptions)
-                .then(response => {
-                    response.json();
-                    if (parseInt(response.status) === 200) {
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
                         setBuildingsList(buildingsList.concat(
-                            <BuildingCard key={buildingName} text={buildingName} />
+                            <BuildingCard key={buildingName} text={buildingName} building={data}/>
                         )
                         );
                         toast.info('New Building Created !', {
@@ -95,33 +95,35 @@ const Buildings = () => {
     }
 
     return (
-        <div className="buildings" data-testid="buildings">
-            <h2 className="buildings-header">Manage Buildings</h2>
-            <div className='building-list'>
-                <BuildingCard text="Building 3"/>
-                {buildingsList}
-                <MoreBuildingsCard text="New Building" onClick={OpenModal} />
-                <Modal visible={visible} width="400" height="330" effect="fadeInDown" onClickAway={CloseModal}>
-                    <div className='building-modal'>
-                        <h1 className='building-modal-title'>Add Building</h1>
-                        <div className='building-modal-content'>
-                            <label htmlFor="building-name">Name</label>
-                            <input id='building-name' type="text" onChange={handleBuildingNameChange} placeholder="Building name..." />
-                            {buildingNameError && <p className='building-name-error'>* Building name can't be null</p>}
+        <>
+            <ToastContainer />
+            <div className="buildings" data-testid="buildings">
+                <h2 className="buildings-header">Manage Buildings</h2>
+                <div className='building-list'>
+                    {buildingsList}
+                    <MoreBuildingsCard text="New Building" onClick={OpenModal} />
+                    <Modal visible={visible} width="400" height="330" effect="fadeInDown" onClickAway={CloseModal}>
+                        <div className='building-modal'>
+                            <h1 className='building-modal-title'>Add Building</h1>
+                            <div className='building-modal-content'>
+                                <label htmlFor="building-name">Name</label>
+                                <input id='building-name' type="text" onChange={handleBuildingNameChange} placeholder="Building name..." />
+                                {buildingNameError && <p className='building-name-error'>* Building name can't be null</p>}
+                            </div>
+                            <div className='building-modal-content'>
+                                <label htmlFor="building-addres">Address</label>
+                                <input id='building-address' type="text" onChange={handleBuildingAddressChange} placeholder="Building address..." />
+                                {buildingAddressError && <p className='building-name-error'>* Building address can't be null</p>}
+                            </div>
+                            <div className='building-modal-buttons'>
+                                <AwesomeButton type="primary" onPress={onAddBtnClick}>Add</AwesomeButton>
+                                <AwesomeButton type="danger" onPress={CloseModal}>Close</AwesomeButton>
+                            </div>
                         </div>
-                        <div className='building-modal-content'>
-                            <label htmlFor="building-addres">Address</label>
-                            <input id='building-address' type="text" onChange={handleBuildingAddressChange} placeholder="Building address..." />
-                            {buildingAddressError && <p className='building-name-error'>* Building address can't be null</p>}
-                        </div>
-                        <div className='building-modal-buttons'>
-                            <AwesomeButton type="primary" onPress={onAddBtnClick}>Add</AwesomeButton>
-                            <AwesomeButton type="danger" onPress={CloseModal}>Close</AwesomeButton>
-                        </div>
-                    </div>
-                </Modal>
+                    </Modal>
+                </div>
             </div>
-        </div>
+        </>
     )
 }
 

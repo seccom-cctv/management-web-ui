@@ -64,11 +64,11 @@ const Home = () => {
             })
         };
         fetch('http://localhost:8082/v1/company/', requestOptions)
-            .then(response => {
-                response.json();
-                if (parseInt(response.status) === 200) {
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
                     setCompanyList(companyList.concat(
-                        <TableRow key={companyName} id={""} address={companyAddress} company={companyName} buildings={0} cameras={0} users={0} />
+                        <TableRow key={data.id} id={data.id} address={companyAddress} company={companyName} buildings={0} cameras={0} users={0} />
                     )
                     );
                     toast.info('New Company Created !', {
