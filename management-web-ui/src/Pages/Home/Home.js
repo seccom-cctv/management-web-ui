@@ -22,7 +22,7 @@ const Home = () => {
             .then(response => response.json())
             .then(data => {
                 data.forEach((info) => {
-                    result.push(<TableRow company={info.name} address={info.address} buildings={0} cameras={0} users={0} onClick={() => { handleTableRowCLick(info.name) }} />);
+                    result.push(<TableRow id={info.id} company={info.name} address={info.address} buildings={0} cameras={0} users={0}/>);
                 })
                 setInfo(result);
             });
@@ -56,7 +56,7 @@ const Home = () => {
         setCompanyEmail(str);
     }
 
-    const onAddBtnClick = event => {
+    const onAddBtnClick = () => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -72,7 +72,7 @@ const Home = () => {
                 response.json();
                 if (parseInt(response.status) === 200) {
                     setCompanyList(companyList.concat(
-                        <TableRow key={companyName} address={companyAddress} company={companyName} buildings={0} cameras={0} users={0} />
+                        <TableRow key={companyName} id={""} address={companyAddress} company={companyName} buildings={0} cameras={0} users={0} />
                     )
                     );
                     toast.info('New Company Created !', {

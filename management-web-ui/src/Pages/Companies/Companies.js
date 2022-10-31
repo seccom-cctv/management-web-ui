@@ -1,11 +1,25 @@
 
 import { AwesomeButton } from "react-awesome-button";
-import { useSearchParams } from "react-router-dom";
 import './Companies.css';
+import { Link, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Companies = () => {
-    const [searchParams] = useSearchParams();
-    const name = searchParams.get("key");
+    const location = useLocation();
+    const [company, setCompany] = useState(null);
+
+    useEffect(() => {
+        // get of company from id
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        };
+        fetch('http://localhost:8082/v1/company/?id=' + location.state.id, requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                setCompany(data);
+            });
+    }, [])
 
     return (
         <div className='companies'>
@@ -14,7 +28,8 @@ const Companies = () => {
                 <div>
                     <div className="companies-details-item">
                         <h5>Name:</h5>
-                        <p>{name}</p>
+
+                        <p>{company!==null ? company[0].name : company}</p>
                     </div>
                     <div className="companies-details-item" style={{ marginTop: '2rem' }}>
                         <h5>Date:</h5>
@@ -34,7 +49,7 @@ const Companies = () => {
             </div>
             <div className='companies-buttons'>
                 <AwesomeButton type="secondary" onPress={() => { setTimeout(() => window.location.replace("/users"), 500) }}>Manage Users</AwesomeButton>
-                <AwesomeButton type="secondary" onPress={() => { setTimeout(() => window.location.replace("/buildings"), 500) }}>Manage Buildings</AwesomeButton>
+                <Link to={"/buildings"} state={{company: company}}><AwesomeButton type="secondary">Manage Buildings</AwesomeButton></Link>
                 <AwesomeButton type="secondary">Manage Cameras</AwesomeButton>
             </div>
         </div>
