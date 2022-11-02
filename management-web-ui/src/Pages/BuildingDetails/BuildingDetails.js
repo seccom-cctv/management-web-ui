@@ -35,6 +35,7 @@ const BuildingDetails = () => {
                 setDeviceList(result);
             });
         setBuilding(location.state.building);
+        // eslint-disable-next-line
     }, [location, renderDevices])
 
     const clearForm = () => {
