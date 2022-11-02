@@ -51,7 +51,7 @@ const Buildings = () => {
             fetch('http://localhost:8082/v1/building/', requestOptions)
                 .then(response => response.json())
                 .then(data => {
-                    if (data) {
+                    if (data.id) {
                         setBuildingsList(buildingsList.concat(
                             <BuildingCard key={buildingName} text={buildingName} building={data}/>
                         )

@@ -66,7 +66,8 @@ const Home = () => {
         fetch('http://localhost:8082/v1/company/', requestOptions)
             .then(response => response.json())
             .then(data => {
-                if (data) {
+                console.log(data);
+                if (data.id) {
                     setCompanyList(companyList.concat(
                         <TableRow key={data.id} id={data.id} address={companyAddress} company={companyName} buildings={0} cameras={0} users={0} />
                     )

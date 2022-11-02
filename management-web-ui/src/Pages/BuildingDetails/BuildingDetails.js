@@ -15,6 +15,7 @@ const BuildingDetails = () => {
     //const [deviceAddress, setDeviceAddress] = useState("");
     const [devicesList, setDeviceList] = useState(null);
     const [building, setBuilding] = useState(null);
+    const [renderDevices, setRenderDevices] = useState(false);
 
     const location = useLocation();
 
@@ -34,7 +35,7 @@ const BuildingDetails = () => {
                 setDeviceList(result);
             });
         setBuilding(location.state.building);
-    }, [location])
+    }, [location, renderDevices])
 
     const addNewDevice = () => {
         const requestOptions = {
@@ -49,7 +50,7 @@ const BuildingDetails = () => {
         fetch('http://localhost:8082/v1/device/', requestOptions)
             .then(response => response.json())
             .then(data => {
-                if (data) {
+                if (data.id) {
                     setDeviceList(devicesList.concat(
                         <BuildingTableRow key={data.id} device={data.name} date="29/10/2022" health="10%" onClick={()=>{removeDevice(data.id)}}/>
                     )
@@ -91,6 +92,7 @@ const BuildingDetails = () => {
             .then(response => response.json())
             .then(data => {
                 if (data) {
+                    setRenderDevices(!renderDevices);
                     toast.info('Device Removed !', {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 2000
