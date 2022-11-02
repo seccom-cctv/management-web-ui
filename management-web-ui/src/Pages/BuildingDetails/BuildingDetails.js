@@ -15,6 +15,7 @@ const BuildingDetails = () => {
     //const [deviceAddress, setDeviceAddress] = useState("");
     const [devicesList, setDeviceList] = useState(null);
     const [building, setBuilding] = useState(null);
+    const [renderDevices, setRenderDevices] = useState(false);
 
     const location = useLocation();
 
@@ -34,7 +35,7 @@ const BuildingDetails = () => {
                 setDeviceList(result);
             });
         setBuilding(location.state.building);
-    }, [location])
+    }, [location, renderDevices])
 
     const clearForm = () => {
         setDeviceName("");
@@ -110,7 +111,8 @@ const BuildingDetails = () => {
             .then(response => response.json())
             .then(data => {
                 if (data) {
-                    toast.info('Device Removed !', {
+                    setRenderDevices(!renderDevices);
+                    toast.error('Device Removed !', {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 2000
                     });
