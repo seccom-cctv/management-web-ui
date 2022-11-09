@@ -10,7 +10,7 @@
 
 .building-details-content {
     display: flex;
-    width: 30%;
+    width: 45%;
     margin: 2rem auto;
     justify-content: space-between;
 }
@@ -60,6 +60,7 @@
     display: flex;
     justify-content: flex-end;
     margin-bottom: 2rem;
+    gap: 2rem;
 }
 
 .device-modal-title {
@@ -87,9 +88,13 @@
     width: 12rem;
 }
 
-#device-type, #device-address {
+#device-type, #device-address, #input-name, #input-address {
     padding: 0.2rem;
     outline: none;
+}
+
+#input-name, #input-address {
+    width: 15rem;
 }
 
 .confirm-modal-text {
