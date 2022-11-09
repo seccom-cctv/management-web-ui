@@ -30,6 +30,16 @@ const Companies = () => {
         setCompanyAddress(str);
     }
 
+    const handleCompanyPhone = (event) => {
+        var str = event.target.value;
+        setCompanyPhone(str);
+    }
+
+    const handleCompanyEmail = (event) => {
+        var str = event.target.value;
+        setCompanyEmail(str);
+    }
+
     useEffect(() => {
         const requestOptions = {
             method: 'GET',
@@ -59,6 +69,24 @@ const Companies = () => {
 
         if (!companyAddress || companyAddress.length <= 3 || companyAddress === "null") {
             toast.error('Company address cant be null!', {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000
+            });
+
+            return;
+        }
+
+        if (!companyPhone || companyPhone.length <= 9 || companyPhone === "null") {
+            toast.error('Company phone cant be null!', {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000
+            });
+
+            return;
+        }
+
+        if (!companyEmail || companyEmail.length <= 3 || companyEmail === "null") {
+            toast.error('Company email cant be null!', {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2000
             });
@@ -150,14 +178,32 @@ const Companies = () => {
                     }
                 </div>
                 <div>
-                    <div className="companies-details-item">
-                        <h5>Active Cameras:</h5>
-                        <p>0</p>
-                    </div>
-                    <div className="companies-details-item" style={{ marginTop: '2rem' }}>
-                        <h5>Users:</h5>
-                        <p>0</p>
-                    </div>
+                    {
+                        inputVisible &&
+                        <>
+                            <div className="companies-details-item">
+                                <h5>Phone:</h5>
+                                <input type="text" value={companyPhone} onChange={handleCompanyPhone} id="input-name" />
+                            </div>
+                            <div className="companies-details-item" style={{ marginTop: '2rem' }}>
+                                <h5>Email:</h5>
+                                <input type="text" value={companyEmail} onChange={handleCompanyEmail} id="input-address" />
+                            </div>
+                        </>
+                    }
+                    {
+                        !inputVisible &&
+                        <>
+                            <div className="companies-details-item">
+                                <h5>Phone:</h5>
+                                <p>{companyPhone}</p>
+                            </div>
+                            <div className="companies-details-item" style={{ marginTop: '2rem' }}>
+                                <h5>Email:</h5>
+                                <p>{companyEmail}</p>
+                            </div>
+                        </>
+                    }
                 </div>
             </div>
             <div className='companies-buttons'>
