@@ -1,7 +1,6 @@
 import './BuildingDetails.css';
 import BuildingTableRow from './components/BuildingTableRow';
 import { AwesomeButton } from 'react-awesome-button';
-import { PencilIcon, PlusCircleIcon } from "@primer/octicons-react"; // custom icons
 import Modal from 'react-awesome-modal';
 import 'react-awesome-button/dist/styles.css';
 import { toast, ToastContainer } from 'react-toastify';
@@ -119,6 +118,7 @@ const BuildingDetails = () => {
                 });
                 setDeviceList(result);
             });
+            console.log(building);
         setBuilding(location.state.building);
         // eslint-disable-next-line
     }, [location, renderDevices])
