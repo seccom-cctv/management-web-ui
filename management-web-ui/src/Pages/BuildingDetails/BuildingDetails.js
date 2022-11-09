@@ -21,6 +21,21 @@ const BuildingDetails = () => {
     const [buildingName, setBuildingName] = useState("");
     const [buildingAddress, setBuildingAddress] = useState("");
 
+    useEffect(() => {
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        };
+        fetch('http://localhost:8082/v1/building/?id=' + location.state.building.id, requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                setBuildingName(data[0].name);
+                setBuildingAddress(data[0].address);
+            });
+        // eslint-disable-next-line
+    }, [])
+
     const handleInputVisibility = () => {
         setInputVisible(!inputVisible);
     }
@@ -36,6 +51,24 @@ const BuildingDetails = () => {
     }
 
     const handlePutBuilding = () => {
+        if (!buildingName || buildingName.length <= 3 || buildingName === "null") {
+            toast.error('Building name cant be null!', {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000
+            });
+
+            return;
+        }
+
+        if (!buildingAddress || buildingAddress.length <= 3 || buildingAddress === "null") {
+            toast.error('Building address cant be null!', {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000
+            });
+
+            return;
+        }
+
         const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -86,8 +119,6 @@ const BuildingDetails = () => {
                 });
                 setDeviceList(result);
             });
-        setBuildingName(location.state.building.name);
-        setBuildingAddress(location.state.building.address);
         setBuilding(location.state.building);
         // eslint-disable-next-line
     }, [location, renderDevices])
