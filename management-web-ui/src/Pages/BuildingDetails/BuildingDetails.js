@@ -16,6 +16,90 @@ const BuildingDetails = () => {
     const [devicesList, setDeviceList] = useState(null);
     const [building, setBuilding] = useState(null);
     const [renderDevices, setRenderDevices] = useState(false);
+    const [inputVisible, setInputVisible] = useState(false);
+    const [buildingName, setBuildingName] = useState("");
+    const [buildingAddress, setBuildingAddress] = useState("");
+
+    useEffect(() => {
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        };
+        fetch('http://localhost:8082/v1/building/?id=' + location.state.building.id, requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                setBuildingName(data[0].name);
+                setBuildingAddress(data[0].address);
+            });
+        // eslint-disable-next-line
+    }, [])
+
+    const handleInputVisibility = () => {
+        setInputVisible(!inputVisible);
+    }
+
+    const handleBuildingName = (event) => {
+        var str = event.target.value;
+        setBuildingName(str);
+    }
+
+    const handleBuildingAddress = (event) => {
+        var str = event.target.value;
+        setBuildingAddress(str);
+    }
+
+    const handlePutBuilding = () => {
+        if (!buildingName || buildingName.length <= 3 || buildingName === "null") {
+            toast.error('Building name cant be null!', {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000
+            });
+
+            return;
+        }
+
+        if (!buildingAddress || buildingAddress.length <= 3 || buildingAddress === "null") {
+            toast.error('Building address cant be null!', {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000
+            });
+
+            return;
+        }
+
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name: buildingName,
+                address: buildingAddress,
+                company_id: location.state.building.company_id
+            })
+        };
+        fetch('http://localhost:8082/v1/building/' + location.state.building.id, requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    toast.info('Building Updated !', {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 2000
+                    });
+                    setInputVisible(false);
+                } else {
+                    toast.error('Something went wrong !', {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 2000
+                    });
+                }
+            })
+            .then(() => {
+                setBuildingName(buildingName);
+                setBuildingAddress(buildingAddress);
+            }
+            )
+
+    }
 
     const location = useLocation();
 
@@ -34,6 +118,7 @@ const BuildingDetails = () => {
                 });
                 setDeviceList(result);
             });
+            console.log(building);
         setBuilding(location.state.building);
         // eslint-disable-next-line
     }, [location, renderDevices])
@@ -166,16 +251,42 @@ const BuildingDetails = () => {
                 </Modal>
                 <h2 className='building-details-header'>Building Details</h2>
                 <div className='building-details-content'>
-                    <div className='building-details-content-items'>
-                        <h5>Name:</h5>
-                        <p>{building !== null ? building.name : ""}</p>
-                    </div>
-                    <div className='building-details-content-items'>
-                        <h5>Location:</h5>
-                        <p>{building !== null ? building.address : ""}</p>
-                    </div>
+                    {
+                        inputVisible &&
+                        <>
+                            <div className='building-details-content-items'>
+                                <h5>Name:</h5>
+                                <input type="text" value={buildingName} onChange={handleBuildingName} id="input-name" />
+                            </div>
+                            <div className='building-details-content-items'>
+                                <h5>Location:</h5>
+                                <input type="text" value={buildingAddress} onChange={handleBuildingAddress} id="input-address" />
+                            </div>
+                        </>
+                    }
+                    {
+                        !inputVisible &&
+                        <>
+                            <div className='building-details-content-items'>
+                                <h5>Name:</h5>
+                                <p>{buildingName}</p>
+                            </div>
+                            <div className='building-details-content-items'>
+                                <h5>Location:</h5>
+                                <p>{buildingAddress}</p>
+                            </div>
+                        </>
+                    }
                 </div>
                 <div className='add-new-camara-button'>
+                    {
+                        !inputVisible &&
+                        <AwesomeButton type="primary" onPress={handleInputVisibility}>Edit Building</AwesomeButton>
+                    }
+                    {
+                        inputVisible &&
+                        <AwesomeButton type="primary" onPress={handlePutBuilding}>Confirm Edit</AwesomeButton>
+                    }
                     <AwesomeButton type="primary" onPress={OpenModal}>New Device</AwesomeButton>
                 </div>
                 <ul className="responsive-table" style={{ paddingLeft: 0 }}>
