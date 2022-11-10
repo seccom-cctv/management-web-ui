@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Input from '../../components/Input/Input';
 
 const Buildings = () => {
 
@@ -105,16 +106,6 @@ const Buildings = () => {
         clearForm();
     };
 
-    const handleBuildingNameChange = (event) => {
-        var str = event.target.value;
-        setBuildingName(str);
-    }
-
-    const handleBuildingAddressChange = (event) => {
-        var str = event.target.value;
-        setBuildingAddress(str);
-    }
-
     const OpenModal = () => {
         setVisible(true);
     }
@@ -137,11 +128,11 @@ const Buildings = () => {
                             <h1 className='building-modal-title'>Add Building</h1>
                             <div className='building-modal-content'>
                                 <label htmlFor="building-name">Name</label>
-                                <input id='building-name' type="text" value={buildingName} onChange={handleBuildingNameChange} placeholder="Building name..." />
+                                <Input id="building-name" type="text" label="Building name..." value={buildingName} on_value_changed={setBuildingName} />
                             </div>
                             <div className='building-modal-content'>
                                 <label htmlFor="building-addres">Address</label>
-                                <input id='building-address' type="text" value={buildingAddress} onChange={handleBuildingAddressChange} placeholder="Building address..." />
+                                <Input id="building-address" type="text" label="Building address..." value={buildingAddress} on_value_changed={setBuildingAddress} />
                             </div>
                             <div className='building-modal-buttons'>
                                 <AwesomeButton type="primary" onPress={onAddBtnClick}>Add</AwesomeButton>

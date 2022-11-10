@@ -7,6 +7,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import Input from '../../components/Input/Input';
 
 const BuildingDetails = () => {
     const [visible, setVisible] = useState(false);
@@ -178,11 +179,6 @@ const BuildingDetails = () => {
         setDeviceType(newDevice);
     }
 
-    const handleDeviceName = (event) => {
-        var str = event.target.value;
-        setDeviceName(str);
-    }
-
     // const handleDeviceAddress = (event) => {
     //     var str = event.target.value;
     //     setDeviceAddress(str);
@@ -241,7 +237,7 @@ const BuildingDetails = () => {
                         </div>
                         <div className='device-modal-content'>
                             <label htmlFor="device-name">Name</label>
-                            <input id='device-name' type="text" value={deviceName} onChange={handleDeviceName} placeholder="Device name..." />
+                            <Input id="device-name" type="text" label="Device name..." value={deviceName} on_value_changed={setDeviceName} />
                         </div>
                         <div className='device-modal-buttons'>
                             <AwesomeButton type="primary" onPress={addNewDevice}>Add</AwesomeButton>
@@ -256,11 +252,11 @@ const BuildingDetails = () => {
                         <>
                             <div className='building-details-content-items'>
                                 <h5>Name:</h5>
-                                <input type="text" value={buildingName} onChange={handleBuildingName} id="input-name" />
+                                <Input id="building-name" type="text" label="Building name..." value={buildingName} on_value_changed={setBuildingName} />
                             </div>
                             <div className='building-details-content-items'>
                                 <h5>Location:</h5>
-                                <input type="text" value={buildingAddress} onChange={handleBuildingAddress} id="input-address" />
+                                <Input id="building-location" type="text" label="Building location..." value={buildingAddress} on_value_changed={setBuildingAddress} />
                             </div>
                         </>
                     }

@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import TableRow from './components/TableRow';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Input from '../../components/Input/Input';
 
 const Home = () => {
 
@@ -170,19 +171,19 @@ const Home = () => {
                     <h1 className='company-modal-title'>Add Company</h1>
                     <div className='company-modal-content'>
                         <label htmlFor="company-name">Name</label>
-                        <input id='company-name' type="text" onChange={handleCompanyName} value={companyName} placeholder="Company name..." />
+                        <Input id="company-name" type="text" label="Company name..." value={companyName} on_value_changed={setCompanyName} />
                     </div>
                     <div className='company-modal-content'>
                         <label htmlFor="company-address">Address</label>
-                        <input id='company-address' type="text" onChange={handleCompanyAddress} value={companyAddress} placeholder="Company address..." />
+                        <Input id="company-address" type="text" label="Company address..." value={companyAddress} on_value_changed={setCompanyAddress} />
                     </div>
                     <div className='company-modal-content'>
                         <label htmlFor="company-phone">Phone</label>
-                        <input id='company-phone' type="text" onChange={handleCompanyPhone} value={companyPhone} placeholder="Company phone..." />
+                        <Input id="company-phone" type="text" label="Company phone..." value={companyPhone} on_value_changed={setCompanyPhone} />
                     </div>
                     <div className='company-modal-content'>
                         <label htmlFor="company-email">Email</label>
-                        <input id='company-email' type="text" onChange={handleCompanyEmail} value={companyEmail} placeholder="Company email..." />
+                        <Input id="company-email" type="text" label="Company email..." value={companyEmail} on_value_changed={setCompanyEmail} />
                     </div>
                     <div className='company-modal-buttons'>
                         <AwesomeButton type="primary" onPress={onAddBtnClick}>Add</AwesomeButton>
