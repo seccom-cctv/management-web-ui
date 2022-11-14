@@ -6,6 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { redirectToLogin } from '../../services/wso2';
 
 const ScreenNavbar = () => {
 
@@ -50,6 +51,9 @@ const ScreenNavbar = () => {
                         <Nav.Link style={{paddingLeft: "1rem", paddingRight: "1rem"}}>
                             <Link className='navbar-item navbar-item-change' to="/settings">Settings</Link>
                         </Nav.Link>
+                        <div>
+                            {<a onClick={() => redirectToLogin()}>login</a>}
+                        </div>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

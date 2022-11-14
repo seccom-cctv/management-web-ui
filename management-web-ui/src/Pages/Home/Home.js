@@ -12,6 +12,7 @@ const Home = () => {
     const [info, setInfo] = useState(null);
 
     useEffect(() => {
+        //login();
         let result = [];
         const requestOptions = {
             method: 'GET',
@@ -27,6 +28,11 @@ const Home = () => {
             });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+    
+    const login = () => {
+    let params = new URLSearchParams(window.location.search);
+    wso2(params.get('code'));
+    }
 
     const [visible, setVisible] = useState(false);
     const [companyList, setCompanyList] = useState([]);
