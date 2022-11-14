@@ -16,17 +16,18 @@ export const wso2 = (params_code) => {
 }
 
 export const redirectToLogin = () => {
-  window.location.replace(`${IDP_SERVER_URL}/oauth2/authorize?scope=openid+internal_application_mgt_view&response_type=code&redirect_uri=${REDIRECT_URI}&client_id=${CLIENT_KEY}`);
+  window.location.replace(`${IDP_SERVER_URL}/oauth2/authorize?scope=openid+internal_application_mgt_view&response_type=id_token&redirect_uri=${REDIRECT_URI}&client_id=${CLIENT_KEY}`);
 }
 
 // trades code parameter received by wso2 for an access_token
 function getAcessToken(code) {
   let headerAuthorization = Base64.encode(`${CLIENT_KEY}:${CLIENT_SECRET}`);
 
-  fetch(`${IDP_SERVER_URL}/oauth2/token?code=${code}&redirect_uri=http://localhost&grant_type=authorization_code`, {
+  fetch(`${IDP_SERVER_URL}/oauth2/token?code=${code}&redirect_uri=${REDIRECT_URI}&grant_type=authorization_code`, {
     headers: {
       Authorization: `Basic ${headerAuthorization}`,
-      "Content-Type": "application/x-www-form-urlencoded"
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Access-Control-Allow-Origin": "*"
     },
     method: "POST"
   })
