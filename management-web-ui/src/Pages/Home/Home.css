@@ -39,6 +39,7 @@
 
 .company-modal-buttons {
     margin-top: 1rem;
+    margin-bottom: 1rem;
     width: 40%;
     margin-left: 60%;
     display: flex;
@@ -87,6 +88,13 @@
     cursor: pointer;
     font-size: 1.05rem;
     transition: 0.2s;
+}
+
+.invalid-field {
+    color: red;
+    font-size: 14px;
+    width: 100%;
+    display: inline-block;
 }
 
 @media all and (max-width: 767px) {

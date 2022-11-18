@@ -6,12 +6,14 @@ import 'react-awesome-button/dist/styles.css';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect, useState } from 'react';
+import 'animate.css';
 import { useLocation } from 'react-router-dom';
 
 const BuildingDetails = () => {
     const [visible, setVisible] = useState(false);
     const [deviceType, setDeviceType] = useState("camera");
     const [deviceName, setDeviceName] = useState("");
+    const [deviceNameError, setDeviceNameError] = useState(false);
     //const [deviceAddress, setDeviceAddress] = useState("");
     const [devicesList, setDeviceList] = useState(null);
     const [building, setBuilding] = useState(null);
@@ -127,17 +129,14 @@ const BuildingDetails = () => {
         setDeviceName("");
         setDeviceType("camera");
         setVisible(false);
+        setDeviceNameError(false);
     }
 
     const addNewDevice = () => {
+        setDeviceNameError(false);
 
         if (!deviceName || deviceName.length < 3 || deviceName === "null") {
-            toast.error('Please fill all fields!', {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 2000
-            });
-
-            clearForm();
+            setDeviceNameError(true);
             return;
         }
 
@@ -155,7 +154,9 @@ const BuildingDetails = () => {
             .then(data => {
                 if (data) {
                     setDeviceList(devicesList.concat(
-                        <BuildingTableRow key={data.id} device={data.name} date="29/10/2022" health="10%" onClick={() => { removeDevice(data.id) }} />
+                        <div className='animate__animated animate__fadeInDown'>
+                            <BuildingTableRow key={data.id} device={data.name} date="29/10/2022" health="10%" onClick={() => { removeDevice(data.id) }} />
+                        </div>
                     )
                     );
                     toast.info('New Device Created !', {
@@ -225,7 +226,7 @@ const BuildingDetails = () => {
         <>
             <ToastContainer />
             <div className='building-details' data-testid="building-details">
-                <Modal visible={visible} width="400" height="350" effect="fadeInDown" onClickAway={CloseModal}>
+                <Modal visible={visible} width="400" effect="fadeInDown" onClickAway={CloseModal}>
                     <div className='device-modal'>
                         <h1 className='device-modal-title'>Add New Device</h1>
                         <div className='device-modal-content'>
@@ -242,6 +243,7 @@ const BuildingDetails = () => {
                         <div className='device-modal-content'>
                             <label htmlFor="device-name">Name</label>
                             <input id='device-name' type="text" value={deviceName} onChange={handleDeviceName} placeholder="Device name..." />
+                            {deviceNameError && <span className='invalid-field'> * Company phone invalid.</span>}
                         </div>
                         <div className='device-modal-buttons'>
                             <AwesomeButton type="primary" onPress={addNewDevice}>Add</AwesomeButton>

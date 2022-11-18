@@ -7,6 +7,7 @@ import TableRow from './components/TableRow';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { wso2, getWithExpiry } from '../../services/wso2';
+import 'animate.css';
 
 const Home = () => {
 
@@ -23,16 +24,17 @@ const Home = () => {
             .then(response => response.json())
             .then(data => {
                 data.forEach((info) => {
-                    result.push(<TableRow id={info.id} company={info.name} address={info.address} buildings={0} cameras={0} users={0} />);
+                    result.push(
+                    <TableRow id={info.id} company={info.name} address={info.address} buildings={0} cameras={0} users={0} />);
                 })
                 setInfo(result);
             });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    
+
     const login = () => {
-    let params = new URLSearchParams(window.location.search);
-    wso2(params.get('code'));
+        let params = new URLSearchParams(window.location.search);
+        wso2(params.get('code'));
     }
 
     const [visible, setVisible] = useState(false);
@@ -41,6 +43,10 @@ const Home = () => {
     const [companyAddress, setCompanyAddress] = useState("");
     const [companyPhone, setCompanyPhone] = useState("");
     const [companyEmail, setCompanyEmail] = useState("");
+    const [companyNameError, setCompanyNameError] = useState(false);
+    const [companyAddressError, setCompanyAddressError] = useState(false);
+    const [companyPhoneError, setCompanyPhoneError] = useState(false);
+    const [companyEmailError, setCompanyEmailError] = useState(false);
 
     const handleCompanyName = (event) => {
         var str = event.target.value;
@@ -59,6 +65,10 @@ const Home = () => {
         setCompanyEmail(str);
     }
     const clearForm = () => {
+        setCompanyNameError(false);
+        setCompanyAddressError(false);
+        setCompanyEmailError(false);
+        setCompanyPhoneError(false);
         setCompanyName("");
         setCompanyAddress("");
         setCompanyPhone("");
@@ -67,59 +77,33 @@ const Home = () => {
     }
 
     const checkEmail = () => {
-        const testEmail =    /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;
+        const testEmail = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;
         return (testEmail.test(companyEmail));
     }
 
     const onAddBtnClick = () => {
-
-        if (!companyName && !companyAddress && !companyPhone && !companyEmail) {
-            toast.error('Please fill all fields!', {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 2000
-            });
-
-            clearForm();
-            return;
-        }
+        setCompanyNameError(false);
+        setCompanyAddressError(false);
+        setCompanyEmailError(false);
+        setCompanyPhoneError(false);
 
         if (!companyName || companyName.length < 3 || companyName === "null") {
-            toast.error('Please provide a valid name!', {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 2000
-            });
-
-            clearForm();
-            return;
-        }
-        
-        if(!companyEmail || !checkEmail() || companyEmail === "null") {
-            toast.error('Please provide a valid email!', {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 2000
-            });
-            
-            clearForm();
+            setCompanyNameError(true);
             return;
         }
 
         if (!companyAddress || companyAddress.length < 5 || companyAddress === "null") {
-            toast.error('Please provide a valid address!', {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 2000
-            });
-
-            clearForm();
+            setCompanyAddressError(true);
             return;
         }
 
         if (!companyPhone || companyPhone.length < 9 || companyPhone === "null") {
-            toast.error('Please provide a valid phone!', {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 2000
-            });
+            setCompanyPhoneError(true);
+            return;
+        }
 
-            clearForm();
+        if (!companyEmail || !checkEmail() || companyEmail === "null") {
+            setCompanyEmailError(true);
             return;
         }
 
@@ -138,7 +122,9 @@ const Home = () => {
             .then(data => {
                 if (data) {
                     setCompanyList(companyList.concat(
-                        <TableRow key={data.id} id={data.id} address={companyAddress} company={companyName} buildings={0} cameras={0} users={0} />
+                        <div className='animate__animated animate__fadeInDown'>
+                            <TableRow key={data.id} id={data.id} address={companyAddress} company={companyName} buildings={0} cameras={0} users={0} />
+                        </div>
                     )
                     );
                     toast.info('New Company Created !', {
@@ -153,11 +139,7 @@ const Home = () => {
                 }
             })
         //setTimeout(() => window.location.replace("/companies"), 500);
-        setCompanyName("");
-        setCompanyAddress("");
-        setCompanyPhone("");
-        setCompanyEmail("");
-        setVisible(false);
+        clearForm();
     };
 
     const OpenModal = () => {
@@ -172,24 +154,28 @@ const Home = () => {
     return (
         <>
             <ToastContainer />
-            <Modal visible={visible} width="400" height="520" effect="fadeInDown" onClickAway={CloseModal}>
+            <Modal visible={visible} width="400" effect="fadeInDown" onClickAway={CloseModal}>
                 <div className='company-modal'>
                     <h1 className='company-modal-title'>Add Company</h1>
                     <div className='company-modal-content'>
                         <label htmlFor="company-name">Name</label>
                         <input id='company-name' type="text" onChange={handleCompanyName} value={companyName} placeholder="Company name..." />
+                        {companyNameError && <span className='invalid-field'> * Company name invalid.</span>}
                     </div>
                     <div className='company-modal-content'>
                         <label htmlFor="company-address">Address</label>
                         <input id='company-address' type="text" onChange={handleCompanyAddress} value={companyAddress} placeholder="Company address..." />
+                        {companyAddressError && <span className='invalid-field'> * Company address invalid.</span>}
                     </div>
                     <div className='company-modal-content'>
                         <label htmlFor="company-phone">Phone</label>
                         <input id='company-phone' type="text" onChange={handleCompanyPhone} value={companyPhone} placeholder="Company phone..." />
+                        {companyPhoneError && <span className='invalid-field'> * Company phone invalid.</span>}
                     </div>
                     <div className='company-modal-content'>
                         <label htmlFor="company-email">Email</label>
                         <input id='company-email' type="text" onChange={handleCompanyEmail} value={companyEmail} placeholder="Company email..." />
+                        {companyEmailError && <span className='invalid-field'> * Company email invalid.</span>}
                     </div>
                     <div className='company-modal-buttons'>
                         <AwesomeButton type="primary" onPress={onAddBtnClick}>Add</AwesomeButton>
