@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'animate.css';
 import 'react-toastify/dist/ReactToastify.css';
+import Input from '../../components/Input/Input';
 
 const Buildings = () => {
 
@@ -95,16 +96,6 @@ const Buildings = () => {
         
         clearForm();
     };
-
-    const handleBuildingNameChange = (event) => {
-        var str = event.target.value;
-        setBuildingName(str);
-    }
-
-    const handleBuildingAddressChange = (event) => {
-        var str = event.target.value;
-        setBuildingAddress(str);
-    }
 
     const OpenModal = () => {
         setVisible(true);

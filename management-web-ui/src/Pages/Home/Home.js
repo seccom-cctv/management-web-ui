@@ -8,6 +8,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { wso2, getWithExpiry } from '../../services/wso2';
 import 'animate.css';
+import Input from '../../components/Input/Input';
 
 const Home = () => {
 

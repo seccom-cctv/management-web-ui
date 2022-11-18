@@ -5,6 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Input from "../../components/Input/Input";
 
 const Companies = () => {
     const [company, setCompany] = useState(null);
@@ -19,26 +20,6 @@ const Companies = () => {
     }
 
     const location = useLocation();
-
-    const handleCompanyName = (event) => {
-        var str = event.target.value;
-        setCompanyName(str);
-    }
-
-    const handleCompanyAddress = (event) => {
-        var str = event.target.value;
-        setCompanyAddress(str);
-    }
-
-    const handleCompanyPhone = (event) => {
-        var str = event.target.value;
-        setCompanyPhone(str);
-    }
-
-    const handleCompanyEmail = (event) => {
-        var str = event.target.value;
-        setCompanyEmail(str);
-    }
 
     useEffect(() => {
         const requestOptions = {
@@ -76,7 +57,7 @@ const Companies = () => {
             return;
         }
 
-        if (!companyPhone || companyPhone.length <= 9 || companyPhone === "null") {
+        if (!companyPhone || companyPhone.length < 9 || companyPhone === "null") {
             toast.error('Company phone cant be null!', {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2000
@@ -154,11 +135,11 @@ const Companies = () => {
                         <>
                             <div className="companies-details-item">
                                 <h5>Name:</h5>
-                                <input type="text" value={companyName} onChange={handleCompanyName} id="input-name" />
+                                <Input id="company-name" type="text" label="Company name..." value={companyName} on_value_changed={setCompanyName} />
                             </div>
                             <div className="companies-details-item" style={{ marginTop: '2rem' }}>
                                 <h5>Address:</h5>
-                                <input type="text" value={companyAddress} onChange={handleCompanyAddress} id="input-address" />
+                                <Input id="company-address" type="text" label="Company address..." value={companyAddress} on_value_changed={setCompanyAddress} />
                             </div>
                         </>
                     }
@@ -183,11 +164,11 @@ const Companies = () => {
                         <>
                             <div className="companies-details-item">
                                 <h5>Phone:</h5>
-                                <input type="text" value={companyPhone} onChange={handleCompanyPhone} id="input-name" />
+                                <Input id="company-phone" type="text" label="Company phone..." value={companyPhone} on_value_changed={setCompanyPhone} />
                             </div>
                             <div className="companies-details-item" style={{ marginTop: '2rem' }}>
                                 <h5>Email:</h5>
-                                <input type="text" value={companyEmail} onChange={handleCompanyEmail} id="input-address" />
+                                <Input id="company-email" type="text" label="Company email..." value={companyEmail} on_value_changed={setCompanyEmail} />
                             </div>
                         </>
                     }
