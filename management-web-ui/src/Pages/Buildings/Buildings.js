@@ -7,6 +7,7 @@ import './Buildings.css';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+import 'animate.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Buildings = () => {
@@ -15,6 +16,8 @@ const Buildings = () => {
     const [buildingsList, setBuildingsList] = useState([]);
     const [buildingName, setBuildingName] = useState("");
     const [buildingAddress, setBuildingAddress] = useState("");
+    const [buildingNameError, setBuildingNameError] = useState(false);
+    const [buildingAddressError, setBuildingAddressError] = useState(false);
 
     const location = useLocation();
 
@@ -36,40 +39,24 @@ const Buildings = () => {
     }, [location])
 
     const clearForm = () => {
+        setBuildingAddressError(false);
+        setBuildingNameError(false);
         setBuildingAddress("");
         setBuildingName("");
         setVisible(false);
     }
 
     const onAddBtnClick = (event) => {
-
-        if (!buildingAddress && !buildingName) {
-            toast.error('Please fill all fields!', {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 2000
-            });
-
-            clearForm();
-            return;
-        }
+        setBuildingNameError(false);
+        setBuildingAddressError(false);
 
         if (!buildingName || buildingName.length < 3 || buildingName === "null") {
-            toast.error('Please provide a valid name!', {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 2000
-            });
-
-            clearForm();
+            setBuildingNameError(true);
             return;
         }
 
         if (!buildingAddress || buildingAddress.length < 5 || buildingAddress === "null") {
-            toast.error('Please provide a valid address!', {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 2000
-            });
-
-            clearForm();
+            setBuildingAddressError(true);
             return;
         }
 
@@ -83,11 +70,13 @@ const Buildings = () => {
             })
         };
         fetch('http://localhost:8082/v1/building/', requestOptions)
-            .then(response => response.json())
             .then(data => {
-                if (data) {
+                console.log(data.status);
+                if (data && parseInt(data.status) === 200) {
                     setBuildingsList(buildingsList.concat(
-                        <BuildingCard key={buildingName} text={buildingName} building={data} />
+                        <div className='animate__animated animate__fadeInDown'>
+                            <BuildingCard key={buildingName} text={buildingName} building={data} />
+                        </div>
                     )
                     );
                     toast.info('New Building Created !', {
@@ -99,8 +88,10 @@ const Buildings = () => {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 2000
                     });
+                    throw new Error('Something went wrong...');
                 }
             })
+            .catch(error => console.log(error));
         
         clearForm();
     };
@@ -132,16 +123,18 @@ const Buildings = () => {
                 <div className='building-list'>
                     {buildingsList}
                     <MoreBuildingsCard text="New Building" onClick={OpenModal} />
-                    <Modal visible={visible} width="400" height="330" effect="fadeInDown" onClickAway={CloseModal}>
+                    <Modal visible={visible} width="400" effect="fadeInDown" onClickAway={CloseModal}>
                         <div className='building-modal'>
                             <h1 className='building-modal-title'>Add Building</h1>
                             <div className='building-modal-content'>
                                 <label htmlFor="building-name">Name</label>
                                 <input id='building-name' type="text" value={buildingName} onChange={handleBuildingNameChange} placeholder="Building name..." />
+                                {buildingNameError && <span className='invalid-field'> * Building name invalid.</span>}
                             </div>
                             <div className='building-modal-content'>
                                 <label htmlFor="building-addres">Address</label>
                                 <input id='building-address' type="text" value={buildingAddress} onChange={handleBuildingAddressChange} placeholder="Building address..." />
+                                {buildingAddressError && <span className='invalid-field'> * Building address invalid.</span>}
                             </div>
                             <div className='building-modal-buttons'>
                                 <AwesomeButton type="primary" onPress={onAddBtnClick}>Add</AwesomeButton>

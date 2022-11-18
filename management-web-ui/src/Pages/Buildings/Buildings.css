@@ -24,6 +24,7 @@
     margin-left: 60%;
     display: flex;
     justify-content: space-around;
+    margin-bottom: 1rem;
 }
 
 .building-modal-content {
@@ -38,4 +39,11 @@
 .building-name-error {
     color: red;
     font-size: 14px;
+}
+
+.invalid-field {
+    color: red;
+    font-size: 14px;
+    width: 100%;
+    display: inline-block;
 }

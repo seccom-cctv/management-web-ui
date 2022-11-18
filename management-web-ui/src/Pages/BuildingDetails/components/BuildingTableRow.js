@@ -16,8 +16,7 @@ const BuildingTableRow = (props) => {
             <div className="col col-44 col-icon" data-label="Logs"><FontAwesomeIcon icon={faEye} /></div>
             <div className="col col-55 col-icon" data-label="Actions">
                 <AwesomeButton type="primary" onPress={null}><PencilIcon /></AwesomeButton>
-                <AwesomeButton style={{marginLeft: '1rem'}} type="danger" onPress={props.onClick}><TrashIcon /></AwesomeButton>
-                <ToastContainer />
+                <AwesomeButton style={{ marginLeft: '1rem' }} type="danger" onPress={props.onClick}><TrashIcon /></AwesomeButton>
             </div>
         </li>
     )
