@@ -8,7 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useEffect, useState } from 'react';
 import 'animate.css';
 import { useLocation } from 'react-router-dom';
-import Input from '../../components/Input/Input';
 
 const BuildingDetails = () => {
     const [visible, setVisible] = useState(false);
@@ -180,6 +179,11 @@ const BuildingDetails = () => {
         setDeviceType(newDevice);
     }
 
+    const handleDeviceName = (event) => {
+        var str = event.target.value;
+        setDeviceName(str);
+    }
+
     // const handleDeviceAddress = (event) => {
     //     var str = event.target.value;
     //     setDeviceAddress(str);
@@ -254,11 +258,11 @@ const BuildingDetails = () => {
                         <>
                             <div className='building-details-content-items'>
                                 <h5>Name:</h5>
-                                <Input id="building-name" type="text" label="Building name..." value={buildingName} on_value_changed={setBuildingName} />
+                                <input type="text" value={buildingName} onChange={handleBuildingName} id="input-name" />
                             </div>
                             <div className='building-details-content-items'>
                                 <h5>Location:</h5>
-                                <Input id="building-location" type="text" label="Building location..." value={buildingAddress} on_value_changed={setBuildingAddress} />
+                                <input type="text" value={buildingAddress} onChange={handleBuildingAddress} id="input-address" />
                             </div>
                         </>
                     }

@@ -17,7 +17,8 @@ const {
       this.appUrl = this.parameters.appUrl;
       const service = new chrome.ServiceBuilder(chromedriver.path);
       let chromeOptions = new chrome.Options();
-      if (this.parameters.headless) {
+      let headless = true;
+      if (headless) {
         chromeOptions = chromeOptions.headless();
       }
       this.driver = await new Builder()
