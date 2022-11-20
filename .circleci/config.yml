@@ -13,11 +13,9 @@ jobs:
       
   test:
     machine:
-      - image: 'cimg/node:13.12-browsers'
+      image: ubuntu-2004:202010-01
     steps:
       - checkout
-      - browser-tools/install-chrome
-      - browser-tools/install-chromedriver
       - run: cd ./management-web-ui && yarn install --ignore-engines && npm run build
       - run: cd ./management-web-ui && npm run test
       - run: cd ./management-web-ui && yarn start && yarn e2e
