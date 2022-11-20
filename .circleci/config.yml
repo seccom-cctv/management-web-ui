@@ -16,11 +16,9 @@ jobs:
       - image: 'cimg/node:19.0.0'
     steps:
       - checkout
-      - run: cd ./management-web-ui && yarn install --ignore-engines && npm run build
-      - run: cd ./management-web-ui && npm run test
       - run: 
         command: |
-          cd ./management-web-ui 
+          cd ./management-web-ui
           yarn start &
           yarn e2e
 
