@@ -18,8 +18,7 @@ jobs:
       - checkout
       - run: cd ./management-web-ui && yarn install --ignore-engines && npm run build
       - run: cd ./management-web-ui && npm run test
-      - run: cd ./management-web-ui && yarn start &
-      - run: cd ./management-web-ui && yarn e2e
+      - run: cd ./management-web-ui && npm install pm2 -g && pm2 start npm -- start && yarn e2e
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@1.0.3
