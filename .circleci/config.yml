@@ -22,6 +22,7 @@ jobs:
                 cd ./management-web-ui
                 yarn --ignore-engines
                 yarn start &
+                sleep 10
                 yarn e2e
 
 orbs:
