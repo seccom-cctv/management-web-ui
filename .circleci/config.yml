@@ -17,6 +17,7 @@ jobs:
     steps:
       - checkout
       - run: 
+        name: Run e2e Tests
         command: |
           cd ./management-web-ui
           yarn start &
