@@ -13,20 +13,13 @@ jobs:
       
   test:
     docker:
-      - image: ubuntu-2004:202010-01
+      - image: 'cimg/node:19.0.0'
     steps:
           - checkout
           - run:
               name: Run e2e tests
               command: |
-                git clone git@github.com:seccom-cctv/sites-management-api.git
-                cd ./sites-management-api
-                git switch develop
-                sudo systemctl start docker
-                sudo service docker start
-                docker-compose build
-                docker-compose up
-                cd ../management-web-ui
+                cd ./management-web-ui
                 yarn --ignore-engines
                 yarn start &
                 yarn e2e
