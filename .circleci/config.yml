@@ -19,10 +19,13 @@ jobs:
           - run:
               name: Run e2e tests
               command: |
-                cd ./management-web-ui
+                git clone git@github.com:seccom-cctv/sites-management-api.git
+                cd ./sites-management-api
+                git switch develop
+                sudo ./start.sh
+                cd ../management-web-ui
                 yarn --ignore-engines
                 yarn start &
-                sleep 10
                 yarn e2e
 
 orbs:
