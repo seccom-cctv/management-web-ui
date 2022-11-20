@@ -52,7 +52,7 @@ const ScreenNavbar = () => {
                             <Link className='navbar-item navbar-item-change' to="/settings">Settings</Link>
                         </Nav.Link>
                         <div>
-                            {<a onClick={() => redirectToLogin()}>login</a>}
+                            {<button onClick={() => redirectToLogin()}>login</button>}
                         </div>
                     </Nav>
                 </Navbar.Collapse>
