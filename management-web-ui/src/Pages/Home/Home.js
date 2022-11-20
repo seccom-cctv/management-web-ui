@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 import TableRow from './components/TableRow';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { wso2 } from '../../services/wso2';
 import 'animate.css';
 
 const Home = () => {
