@@ -39,24 +39,29 @@ const {
     async getToBuildingsPage() {
       //Ir para as building pages
       await this.driver.get("http://localhost:3000");
-      const x = await (await this.driver.findElements(By.xpath("//*[@id=\"root\"]/div/div[4]/ul/a"))).length;
+      await this.driver.wait(until.elementLocated(By.id("welcome-text")));
+      const x = await (await this.driver.findElements(By.xpath("//*[@id=\"root\"]/div/div[4]/ul/a[1]"))).length;
       if (x>0) {
-        await this.driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[4]/ul/a/li/div[6]")).click();
-        await this.driver.findElement(By.xpath("//*[@id=\"root\"]/div/div/div[3]/a/button")).click();
+        await this.driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[4]/ul/a[1]/li/div[6]")).click();
+        await this.driver.findElement(By.xpath("//*[@id=\"root\"]/div/div/div[3]/a[1]/button")).click();
       }
       else {
         // Registar uma nova company
-        await this.driver.wait(until.elementLocated(By.xpath("//*[@id=\"root\"]/div/div[3]")));
-        await this.driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[3]/div/button")).click();
-        await this.driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div[1]/div/div[1]/input")).click()
-        await this.driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div[1]/div/div[1]/input")).sendKeys("Test Company");
-        await this.driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div[1]/div/div[2]/input")).click()
-        await this.driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div[1]/div/div[2]/input")).sendKeys("Test Address");
-        await this.driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div[1]/div/div[3]/input")).click()
-        await this.driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div[1]/div/div[3]/input")).sendKeys("256173625");
-        await this.driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div[1]/div/div[4]/input")).click()
-        await this.driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div[1]/div/div[4]/input")).sendKeys("mrt@ua.pt");
-        await this.driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div[1]/div/div[5]/button[1]")).click()
+        await this.driver.wait(until.elementLocated(By.xpath("//*[@id=\"add-new-company-button\"]/button")));
+        const btn = await this.driver.findElement(By.xpath("//*[@id=\"add-new-company-button\"]/button"));
+        btn.click();
+        await this.driver.findElement(By.id("company-name")).click()
+        await this.driver.findElement(By.id("company-name")).sendKeys("Test Company");
+        await this.driver.findElement(By.id("company-address")).click()
+        await this.driver.findElement(By.id("company-address")).sendKeys("Test Address");
+        await this.driver.findElement(By.id("company-phone")).click()
+        await this.driver.findElement(By.id("company-phone")).sendKeys("256173625");
+        await this.driver.findElement(By.id("company-email")).click()
+        await this.driver.findElement(By.id("company-email")).sendKeys("mrt@ua.pt");
+        await this.driver.findElement(By.xpath("//*[@id=\"submit-company\"]/button")).click()
+
+        await this.driver.get("http://localhost:3000");
+        await this.driver.wait(until.elementLocated(By.id("welcome-text")));
 
         //Ir para as building pages
         await this.driver.wait(until.elementLocated(By.xpath("//*[@id=\"root\"]/div/div[4]/ul/a/li/div[6]")));

@@ -120,21 +120,21 @@ const Buildings = () => {
             <ToastContainer />
             <div className="buildings" data-testid="buildings">
                 <h2 className="buildings-header">Manage Buildings</h2>
-                <div className='building-list'>
+                <div id="buildings-list-id" className='building-list'>
                     {buildingsList}
                     <MoreBuildingsCard text="New Building" onClick={OpenModal} />
                     <Modal visible={visible} width="400" effect="fadeInDown" onClickAway={CloseModal}>
-                        <div className='building-modal'>
+                        <div id="add-building-modal"className='building-modal'>
                             <h1 className='building-modal-title'>Add Building</h1>
                             <div className='building-modal-content'>
                                 <label htmlFor="building-name">Name</label>
                                 <input id='building-name' type="text" value={buildingName} onChange={handleBuildingNameChange} placeholder="Building name..." />
-                                {buildingNameError && <span className='invalid-field'> * Building name invalid.</span>}
+                                {buildingNameError && <span id="invalid-building-name"className='invalid-field'> * Building name invalid.</span>}
                             </div>
                             <div className='building-modal-content'>
                                 <label htmlFor="building-addres">Address</label>
                                 <input id='building-address' type="text" value={buildingAddress} onChange={handleBuildingAddressChange} placeholder="Building address..." />
-                                {buildingAddressError && <span className='invalid-field'> * Building address invalid.</span>}
+                                {buildingAddressError && <span id="invalid-building-address"className='invalid-field'> * Building address invalid.</span>}
                             </div>
                             <div className='building-modal-buttons'>
                                 <AwesomeButton type="primary" onPress={onAddBtnClick}>Add</AwesomeButton>

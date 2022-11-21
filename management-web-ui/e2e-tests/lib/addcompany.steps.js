@@ -109,12 +109,15 @@ Then('I should see the message {string}', async function (string) {
   Then('the company named {string} should be added to the list', async function (string) {
     await this.driver.get("http://localhost:3000");
     await this.driver.wait(until.elementLocated(By.id("add-new-company-button")));
-    textElem = await this.driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[4]/ul/a[1]/li/div[1]"))
+    const parent = await this.driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[4]/ul"));
+    let nr = await (await parent.findElements(By.xpath("./child::*"))).length;
+    //*[@id="root"]/div/div[4]
+    textElem = await this.driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[4]/ul/a["+(nr-1)+"]/li/div[1]"))
     text = await textElem.getText();
     assert.equal(text,string)
   });
 
 
-After(async function () {
-  await this.driver.quit();
-});
+// After(async function () {
+//   await this.driver.quit();
+// });

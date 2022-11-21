@@ -184,12 +184,12 @@ const Home = () => {
                 </div>
             </Modal>
             <div className='home' data-testid="home">
-                <h2 className="home-header">Welcome, Manager</h2>
+                <h2 id="welcome-text" className="home-header">Welcome, Manager</h2>
                 <div id="add-new-company-button" className="add-company-btn">
                     <AwesomeButton id="ab" type="primary" onPress={OpenModal}>Add Company</AwesomeButton>
                 </div>
             </div>
-            <div className='companies-list'>
+            <div id="companies-list-id" className='companies-list'>
                 <ul className="responsive-table" style={{ paddingLeft: 0 }}>
                     <li className="table-header">
                         <div className="col col-1">Name</div>
