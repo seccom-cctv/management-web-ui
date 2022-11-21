@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 import TableRow from './components/TableRow';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { wso2, getWithExpiry } from '../../services/wso2';
 import 'animate.css';
 
 const Home = () => {
@@ -31,11 +30,6 @@ const Home = () => {
             });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    const login = () => {
-        let params = new URLSearchParams(window.location.search);
-        wso2(params.get('code'));
-    }
 
     const [visible, setVisible] = useState(false);
     const [companyList, setCompanyList] = useState([]);

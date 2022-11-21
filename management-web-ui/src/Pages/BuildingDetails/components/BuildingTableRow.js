@@ -3,7 +3,6 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { AwesomeButton } from 'react-awesome-button';
 import { PencilIcon, TrashIcon } from "@primer/octicons-react"; // custom icons
 import 'react-awesome-button/dist/styles.css';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../BuildingDetails.css';
 
