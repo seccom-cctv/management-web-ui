@@ -8,6 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useEffect, useState } from 'react';
 import 'animate.css';
 import { useLocation } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+
 
 const BuildingDetails = () => {
     const [visible, setVisible] = useState(false);
@@ -21,6 +23,7 @@ const BuildingDetails = () => {
     const [inputVisible, setInputVisible] = useState(false);
     const [buildingName, setBuildingName] = useState("");
     const [buildingAddress, setBuildingAddress] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         const requestOptions = {
@@ -290,6 +293,7 @@ const BuildingDetails = () => {
                         <AwesomeButton type="primary" onPress={handlePutBuilding}>Confirm Edit</AwesomeButton>
                     }
                     <AwesomeButton type="primary" onPress={OpenModal}>New Device</AwesomeButton>
+                    <AwesomeButton type="primary" onPress={() => navigate('/intrusions')}>View Intrusions</AwesomeButton>
                 </div>
                 <ul className="responsive-table" style={{ paddingLeft: 0 }}>
                     <li className="table-header">
