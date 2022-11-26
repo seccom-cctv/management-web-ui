@@ -12,12 +12,17 @@ jobs:
       - sonarcloud/scan
       
   test:
-    machine:
-      image: ubuntu-2004:202010-01
+    docker:
+      - image: 'cimg/node:19.0.0'
     steps:
-      - checkout
-      - run: cd ./management-web-ui && yarn install --ignore-engines && npm run build
-      - run: cd ./management-web-ui && npm run test
+          - checkout
+          - run:
+              name: Run e2e tests
+              command: |
+                cd ./management-web-ui
+                yarn --ignore-engines
+                yarn start &
+                yarn e2e
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@1.0.3

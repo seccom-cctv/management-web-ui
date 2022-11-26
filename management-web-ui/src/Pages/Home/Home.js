@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 import TableRow from './components/TableRow';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { wso2, getWithExpiry } from '../../services/wso2';
 import 'animate.css';
 
 const Home = () => {
@@ -31,11 +30,6 @@ const Home = () => {
             });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    const login = () => {
-        let params = new URLSearchParams(window.location.search);
-        wso2(params.get('code'));
-    }
 
     const [visible, setVisible] = useState(false);
     const [companyList, setCompanyList] = useState([]);
@@ -155,41 +149,41 @@ const Home = () => {
         <>
             <ToastContainer />
             <Modal visible={visible} width="400" effect="fadeInDown" onClickAway={CloseModal}>
-                <div className='company-modal'>
-                    <h1 className='company-modal-title'>Add Company</h1>
-                    <div className='company-modal-content'>
+                <div id="add-company-modal" className='company-modal'>
+                    <h1 id = "add-company-modal-title"className='company-modal-title'>Add Company</h1>
+                    <div id="company-name-field"className='company-modal-content'>
                         <label htmlFor="company-name">Name</label>
                         <input id='company-name' type="text" onChange={handleCompanyName} value={companyName} placeholder="Company name..." />
-                        {companyNameError && <span className='invalid-field'> * Company name invalid.</span>}
+                        {companyNameError && <span id="invalid-name-company" className='invalid-field'> * Company name invalid.</span>}
                     </div>
                     <div className='company-modal-content'>
                         <label htmlFor="company-address">Address</label>
                         <input id='company-address' type="text" onChange={handleCompanyAddress} value={companyAddress} placeholder="Company address..." />
-                        {companyAddressError && <span className='invalid-field'> * Company address invalid.</span>}
+                        {companyAddressError && <span id="invalid-address-company" className='invalid-field'> * Company address invalid.</span>}
                     </div>
                     <div className='company-modal-content'>
                         <label htmlFor="company-phone">Phone</label>
                         <input id='company-phone' type="text" onChange={handleCompanyPhone} value={companyPhone} placeholder="Company phone..." />
-                        {companyPhoneError && <span className='invalid-field'> * Company phone invalid.</span>}
+                        {companyPhoneError && <span id="invalid-phone-company" className='invalid-field'> * Company phone invalid.</span>}
                     </div>
                     <div className='company-modal-content'>
                         <label htmlFor="company-email">Email</label>
                         <input id='company-email' type="text" onChange={handleCompanyEmail} value={companyEmail} placeholder="Company email..." />
-                        {companyEmailError && <span className='invalid-field'> * Company email invalid.</span>}
+                        {companyEmailError && <span id="invalid-email-company" className='invalid-field'> * Company email invalid.</span>}
                     </div>
                     <div className='company-modal-buttons'>
-                        <AwesomeButton type="primary" onPress={onAddBtnClick}>Add</AwesomeButton>
-                        <AwesomeButton type="danger" onPress={CloseModal}>Close</AwesomeButton>
+                        <div id="submit-company"><AwesomeButton type="primary" onPress={onAddBtnClick}>Add</AwesomeButton></div>
+                        <div id="cancel-company"><AwesomeButton type="danger" onPress={CloseModal}>Close</AwesomeButton></div>
                     </div>
                 </div>
             </Modal>
             <div className='home' data-testid="home">
-                <h2 className="home-header">Welcome, Manager</h2>
-                <div className="add-company-btn">
-                    <AwesomeButton type="primary" onPress={OpenModal}>Add Company</AwesomeButton>
+                <h2 id="welcome-text" className="home-header">Welcome, Manager</h2>
+                <div id="add-new-company-button" className="add-company-btn">
+                    <AwesomeButton id="ab" type="primary" onPress={OpenModal}>Add Company</AwesomeButton>
                 </div>
             </div>
-            <div className='companies-list'>
+            <div id="companies-list-id" className='companies-list'>
                 <ul className="responsive-table" style={{ paddingLeft: 0 }}>
                     <li className="table-header">
                         <div className="col col-1">Name</div>
