@@ -7,8 +7,15 @@ import TableRow from './components/TableRow';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'animate.css';
+import Navbar from '../../components/Navbar/Navbar'
+import { useSearchParams } from 'react-router-dom';
 
 const Home = () => {
+
+    const [searchParams, setSearchParams] = useSearchParams();
+    if (searchParams.get("code")) {
+        localStorage.setItem('code', searchParams.get("code"));
+    }
 
     const [info, setInfo] = useState(null);
 
@@ -145,8 +152,10 @@ const Home = () => {
         setVisible(false);
     }
 
+    if (localStorage.getItem('code')) {
     return (
         <>
+        <Navbar />
             <ToastContainer />
             <Modal visible={visible} width="400" effect="fadeInDown" onClickAway={CloseModal}>
                 <div id="add-company-modal" className='company-modal'>
@@ -198,7 +207,9 @@ const Home = () => {
                 </ul>
             </div>
         </>
-    )
+    )} else {
+        window.location.replace("/")
+    }
 }
 
 export default Home;
