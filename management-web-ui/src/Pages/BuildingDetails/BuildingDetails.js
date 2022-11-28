@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import 'animate.css';
 import { useLocation } from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
+import Navbar from '../../components/Navbar/Navbar'
 
 
 const BuildingDetails = () => {
@@ -227,6 +228,7 @@ const BuildingDetails = () => {
 
     return (
         <>
+            <Navbar />
             <ToastContainer />
             <div className='building-details' data-testid="building-details">
                 <Modal visible={visible} width="400" effect="fadeInDown" onClickAway={CloseModal}>

@@ -1,12 +1,19 @@
 
 import { AwesomeButton } from "react-awesome-button";
 import './Companies.css';
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Navbar from '../../components/Navbar/Navbar'
 
 const Companies = () => {
+
+    const [searchParams, setSearchParams] = useSearchParams();
+    if (searchParams.get("code")) {
+        localStorage.setItem('code', searchParams.get("code"));
+    }
+
     const [company, setCompany] = useState(null);
     const [inputVisible, setInputVisible] = useState(false);
     const [companyName, setCompanyName] = useState("");
@@ -143,7 +150,11 @@ const Companies = () => {
             });
     }, [location])
 
+    if (localStorage.getItem('code')) {
+
     return (
+        <>
+        <Navbar />
         <div className='companies'>
             <ToastContainer />
             <h2 className="companies-header">Company Details</h2>
@@ -219,7 +230,10 @@ const Companies = () => {
                 }
             </div>
         </div>
-    )
+        </>
+    ) } else {
+        window.location.replace("/");
+    }
 }
 
 export default Companies;

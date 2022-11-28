@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'animate.css';
 import 'react-toastify/dist/ReactToastify.css';
+import Navbar from '../../components/Navbar/Navbar'
 
 const Buildings = () => {
 
@@ -117,6 +118,7 @@ const Buildings = () => {
 
     return (
         <>
+        <Navbar />
             <ToastContainer />
             <div className="buildings" data-testid="buildings">
                 <h2 className="buildings-header">Manage Buildings</h2>
