@@ -3,45 +3,71 @@ import background from './video.mp4';
 import { toast, ToastContainer } from 'react-toastify';
 import 'animate.css';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from "react-oidc-context";
 
 const Login = () => {
+    const auth = useAuth();
 
-    if (!localStorage.getItem('code')) {
-        const idpUrl = "https://seccom.auth.us-east-1.amazoncognito.com/login?client_id=6d029pl6uc77rebq5s8gl35m29&response_type=code&scope=aws.cognito.signin.user.admin+email+openid&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcompanies%2Flist"
-        const redirectToCompanies = () => {
-            toast.info('Redirecting....', {
-                position: toast.POSITION.TOP_CENTER,
-                autoClose: 1000
-            });
-            setTimeout(() => window.location.replace(idpUrl), 1300);
-        }
-
-        return (
-            <>
-                <ToastContainer />
-                <div className='login'>
-                    <video src={background} autoPlay loop muted />
-                </div>
-                <div className='login-content'>
-                    <h1>Welcome to SecCom!</h1>
-                    <p>The best security service!</p>
-                    <button className='login-button' onClick={redirectToCompanies}>
-                        Login
-                    </button>
-                </div>
-            </>
-        )
-    } else {
-        toast.warn('Redirecting....', {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 1000
-        });
-        setTimeout(() => window.location.replace("/companies/list"), 1300);
-
-        return (
-            <ToastContainer />
-        )
+    switch (auth.activeNavigator) {
+        case "signinSilent":
+            return <div>Signing you in...</div>;
+        case "signoutRedirect":
+            return <div>Signing you out...</div>;
     }
+
+    if (auth.isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (auth.error) {
+        return <div>Oops... {auth.error.message}</div>;
+    }
+
+    if (auth.isAuthenticated) {
+        // exemplo de GET Request com JWT access_token
+        const token = auth.user?.access_token;
+        
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        };
+        fetch('http://localhost:8082/v1/company/', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach((info) => {
+                    result.push(
+                    <TableRow id={info.id} company={info.name} address={info.address} buildings={0} cameras={0} users={0} />);
+                })
+                setInfo(result);
+            });
+
+        return (
+        <div>
+                Hello {auth.user?.profile.name}{" "}
+                Hello {auth.user?.access_token}{" "}
+            <button onClick={() => auth.removeUser()}>Log out</button>
+        </div>
+        );
+    }
+    
+    return (
+        <>
+            <ToastContainer />
+            <div className='login'>
+                <video src={background} autoPlay loop muted />
+            </div>
+            <div className='login-content'>
+                <h1>Welcome to SecCom!</h1>
+                <p>The best security service!</p>
+                <button className='login-button' onClick={() => auth.signinRedirect()}>
+                    Login
+                </button>
+            </div>
+        </>
+    )
 }
 
 export default Login;

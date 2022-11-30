@@ -8,23 +8,17 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'animate.css';
 import Navbar from '../../components/Navbar/Navbar'
-import { useSearchParams } from 'react-router-dom';
 
 const Home = () => {
-
-    const [searchParams, setSearchParams] = useSearchParams();
-    if (searchParams.get("code")) {
-        localStorage.setItem('code', searchParams.get("code"));
-    }
-
     const [info, setInfo] = useState(null);
 
     useEffect(() => {
-        //login();
         let result = [];
         const requestOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+            },
         };
         fetch('http://localhost:8082/v1/company/', requestOptions)
             .then(response => response.json())
@@ -152,7 +146,6 @@ const Home = () => {
         setVisible(false);
     }
 
-    if (localStorage.getItem('code')) {
     return (
         <>
         <Navbar />
@@ -207,9 +200,7 @@ const Home = () => {
                 </ul>
             </div>
         </>
-    )} else {
-        window.location.replace("/")
-    }
+    )
 }
 
 export default Home;
