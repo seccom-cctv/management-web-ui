@@ -37,11 +37,7 @@ const Login = () => {
         fetch('http://localhost:8082/v1/company/', requestOptions)
             .then(response => response.json())
             .then(data => {
-                data.forEach((info) => {
-                    result.push(
-                    <TableRow id={info.id} company={info.name} address={info.address} buildings={0} cameras={0} users={0} />);
-                })
-                setInfo(result);
+                console.log(data);
             });
 
         return (
