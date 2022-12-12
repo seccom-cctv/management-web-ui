@@ -8,30 +8,30 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'animate.css';
 import Navbar from '../../components/Navbar/Navbar'
-import { useSearchParams } from 'react-router-dom';
+import { User } from "oidc-client-ts"
+import { useAuth } from "react-oidc-context";
+
 
 const Home = () => {
-
-    const [searchParams, setSearchParams] = useSearchParams();
-    if (searchParams.get("code")) {
-        localStorage.setItem('code', searchParams.get("code"));
-    }
-
     const [info, setInfo] = useState(null);
+    const auth = useAuth();
 
     useEffect(() => {
-        //login();
         let result = [];
+        const token = auth.user?.access_token;
         const requestOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
         };
         fetch('http://localhost:8082/v1/company/', requestOptions)
             .then(response => response.json())
             .then(data => {
                 data.forEach((info) => {
                     result.push(
-                    <TableRow id={info.id} company={info.name} address={info.address} buildings={0} cameras={0} users={0} />);
+                        <TableRow id={info.id} company={info.name} address={info.address} buildings={0} cameras={0} users={0} />);
                 })
                 setInfo(result);
             });
@@ -152,15 +152,15 @@ const Home = () => {
         setVisible(false);
     }
 
-    if (localStorage.getItem('code')) {
+    if (auth.isAuthenticated) {
     return (
         <>
-        <Navbar />
+            <Navbar />
             <ToastContainer />
             <Modal visible={visible} width="400" effect="fadeInDown" onClickAway={CloseModal}>
                 <div id="add-company-modal" className='company-modal'>
-                    <h1 id = "add-company-modal-title"className='company-modal-title'>Add Company</h1>
-                    <div id="company-name-field"className='company-modal-content'>
+                    <h1 id="add-company-modal-title" className='company-modal-title'>Add Company</h1>
+                    <div id="company-name-field" className='company-modal-content'>
                         <label htmlFor="company-name">Name</label>
                         <input id='company-name' type="text" onChange={handleCompanyName} value={companyName} placeholder="Company name..." />
                         {companyNameError && <span id="invalid-name-company" className='invalid-field'> * Company name invalid.</span>}
@@ -187,7 +187,7 @@ const Home = () => {
                 </div>
             </Modal>
             <div className='home' data-testid="home">
-                <h2 id="welcome-text" className="home-header">Welcome, Manager</h2>
+                <h2 id="welcome-text" className="home-header">Welcome, {auth.user?.profile.name}</h2>
                 <div id="add-new-company-button" className="add-company-btn">
                     <AwesomeButton id="ab" type="primary" onPress={OpenModal}>Add Company</AwesomeButton>
                 </div>
@@ -207,9 +207,10 @@ const Home = () => {
                 </ul>
             </div>
         </>
-    )} else {
-        window.location.replace("/")
+    )}
+    else {
+        <p>Not authenticated</p>
     }
-}
+} 
 
 export default Home;
