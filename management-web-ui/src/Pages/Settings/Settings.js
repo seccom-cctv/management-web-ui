@@ -11,7 +11,10 @@ const Settings = () => {
     const [newPassword, setNewPassword] = useState("");
     const [password, setPassword] = useState("");
 
-    
+    const logout = () => {
+        window.location.replace("/");
+        auth.removeUser();
+    }
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -48,6 +51,7 @@ const Settings = () => {
                 </form>
             </div>
             </div>
+            <button onClick={logout}>Log out</button>
         </>
     ) } else {
         <div>Not authenticated</div>
