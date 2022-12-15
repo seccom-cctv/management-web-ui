@@ -5,6 +5,7 @@ import 'animate.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from "react-oidc-context";
 import { useEffect } from 'react';
+import { BallTriangle } from 'react-loader-spinner'
 
 const Login = () => {
     const auth = useAuth();
@@ -17,7 +18,23 @@ const Login = () => {
     }
 
     if (auth.isLoading) {
-        return <div>Loading...</div>;
+        return (
+            <>
+                <div className='loading-section'>
+                    <BallTriangle
+                        height={80}
+                        width={80}
+                        radius={5}
+                        color="#ccc"
+                        ariaLabel="ball-triangle-loading"
+                        wrapperClass={{}}
+                        wrapperStyle=""
+                        visible={true}
+                    />
+                    <p>Redirecting...</p>
+                </div>
+            </>
+        )
     }
 
     if (auth.error) {
@@ -27,7 +44,7 @@ const Login = () => {
     if (auth.isAuthenticated) {
         // exemplo de GET Request com JWT access_token
         const token = auth.user?.access_token;
-        
+
         const requestOptions = {
             method: 'GET',
             headers: {
@@ -42,14 +59,14 @@ const Login = () => {
             });
 
         return (
-        <div>
+            <div>
                 Hello {auth.user?.profile.name}{" "}
                 Hello {auth.user?.access_token}{" "}
-            <button onClick={() => auth.removeUser()}>Log out</button>
-        </div>
+                <button onClick={() => auth.removeUser()}>Log out</button>
+            </div>
         );
     }
-    
+
     return (
         <>
             <ToastContainer />
