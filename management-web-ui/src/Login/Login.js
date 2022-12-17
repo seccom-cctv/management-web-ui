@@ -76,7 +76,7 @@ const Login = () => {
             <div className='login-content'>
                 <h1>Welcome to SecCom!</h1>
                 <p>The best security service!</p>
-                <button className='login-button' onClick={() => auth.signinRedirect()}>
+                <button id="login-button" className='login-button' onClick={() => auth.signinRedirect()}>
                     Login
                 </button>
             </div>

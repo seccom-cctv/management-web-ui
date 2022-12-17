@@ -28,6 +28,12 @@ const {
         .build();
     }
   
+
+    async clearCache() {
+      await this.driver.get("chrome://settings/clearBrowserData")
+      const btn = this.driver.findElement(By.id("clearBrowsingDataConfirm"))
+      //*[@id="clearBrowsingDataConfirm"]
+    }
     // async getAddButton() {
     //   return this.driver.findElement(By.name("addTodoInput"));
     // }
@@ -35,6 +41,11 @@ const {
     // async getCompanyModal() {
     //   return this.driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div[1]/div"));
     // }
+
+    async waitForLogin() {
+      let el = await this.driver.findElement(By.xpath("/html/body/div[1]/div/div[1]/div[2]/div[2]/div[3]/div/div/span"));
+      await driver.wait(until.elementIsVisible(el),100);
+    }
 
     async getToBuildingsPage() {
       //Ir para as building pages
