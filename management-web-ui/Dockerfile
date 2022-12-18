@@ -2,9 +2,8 @@
 FROM node:16.14.2
 
 # set working directory
-WORKDIR /management-web-ui
-
-COPY package.json yarn.lock ./
+WORKDIR /home/management-web-ui
+COPY package.json .
 RUN yarn install
 
 COPY . .

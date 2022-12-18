@@ -1,0 +1,24 @@
+.companies {
+    padding: 120px 8rem 2rem 8rem;
+}
+
+.companies-header {
+    width: 100%;
+    text-align: center;
+    font-size: 2.2rem;
+}
+
+.companies-buttons {
+    width: 60%;
+    margin: 0 20%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.companies-details {
+    padding: 4rem 0;
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    margin: 0 25%;
+}

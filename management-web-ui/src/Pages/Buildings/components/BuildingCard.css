@@ -1,0 +1,29 @@
+.building-card {
+    margin: 0 4.8rem;
+    background-color: lightgray;
+    padding: 1.5rem;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 12px;
+}
+
+.building-card img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+.building-card:hover {
+    cursor: pointer;
+    background-color: rgb(164, 160, 160);
+    transition: ease-in-out 0.25s;
+}
+
+.building-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.7rem;
+    margin: 0.5rem 0;
+}

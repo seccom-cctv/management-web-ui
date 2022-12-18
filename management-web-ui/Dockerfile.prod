@@ -1,0 +1,18 @@
+# docker build . -t react:latest -f ./Dockerfile.prod
+
+# build environment
+FROM node:16.14.2-alpine as build
+WORKDIR /home/management-web-ui
+ENV PATH /home/management-web-ui/node_modules/.bin:$PATH
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
+RUN yarn global add react-scripts@3.4.1
+COPY . ./
+RUN yarn run build
+
+# production environment
+FROM bitnami/nginx:latest
+COPY --from=build /home/management-web-ui/build /opt/bitnami/nginx/html
+#COPY nginx.conf /opt/bitnami/nginx/conf/bitnami/conf.d
+
+EXPOSE 8080

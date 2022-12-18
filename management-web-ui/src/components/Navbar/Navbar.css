@@ -4,12 +4,16 @@
     font-family: 'Poppins', sans-serif;
     height: 80px;
     padding: 0 5%;
+    position: relative;
+    z-index: 5;
 }
 
 .navbar-big {
     width: 100%;
     font-family: 'Poppins', sans-serif;
     padding: 0 5%;
+    position: relative;
+    z-index: 5;
 }
 
 .navbar-item {
