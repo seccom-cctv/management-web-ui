@@ -48,7 +48,6 @@ workflows:
             branches:
               only:
                 - main
-                - develop
       # - aws-ecs/deploy-service-update:
       #     requires:
       #       - aws-ecr/build-and-push-image
