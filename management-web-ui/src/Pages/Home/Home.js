@@ -32,6 +32,7 @@ const Home = () => {
             .then(data => {
                 console.log(data)
                 data.forEach((info) => {
+                    console.log(info.id)
                     result.push(
                         <TableRow id={info.id} company={info.name} address={info.address} buildings={info.buildings.length} cameras={"-"} users={info.managers.length} />);
                 })
