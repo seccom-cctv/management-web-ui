@@ -18,6 +18,7 @@ const Home = () => {
 
     useEffect(() => {
         let result = [];
+
         const token = auth.user?.access_token;
         const requestOptions = {
             method: 'GET',
@@ -29,14 +30,16 @@ const Home = () => {
         fetch('http://localhost:8082/v1/company/', requestOptions)
             .then(response => response.json())
             .then(data => {
+                console.log(data)
                 data.forEach((info) => {
+                    console.log(info.id)
                     result.push(
-                        <TableRow id={info.id} company={info.name} address={info.address} buildings={0} cameras={0} users={0} />);
+                        <TableRow id={info.id} company={info.name} address={info.address} buildings={info.buildings.length} cameras={"-"} users={info.managers.length} />);
                 })
                 setInfo(result);
             });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [auth.user?.access_token ]);
 
     const [visible, setVisible] = useState(false);
     const [companyList, setCompanyList] = useState([]);
@@ -110,7 +113,10 @@ const Home = () => {
 
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth.user?.access_token}`
+            },
             body: JSON.stringify({
                 name: companyName,
                 address: companyAddress,

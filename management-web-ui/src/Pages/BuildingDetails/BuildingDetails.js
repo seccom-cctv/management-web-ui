@@ -10,9 +10,11 @@ import 'animate.css';
 import { useLocation } from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
 import Navbar from '../../components/Navbar/Navbar'
+import { useAuth } from "react-oidc-context";
 
 
 const BuildingDetails = () => {
+    const auth = useAuth();
     const [visible, setVisible] = useState(false);
     const [deviceType, setDeviceType] = useState("camera");
     const [deviceName, setDeviceName] = useState("");
@@ -29,17 +31,19 @@ const BuildingDetails = () => {
     useEffect(() => {
         const requestOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth.user?.access_token}`
+            },
         };
         fetch('http://localhost:8082/v1/building/?id=' + location.state.building.id, requestOptions)
             .then(response => response.json())
             .then(data => {
-                console.log(data)
                 setBuildingName(data[0].name);
                 setBuildingAddress(data[0].address);
             });
         // eslint-disable-next-line
-    }, [])
+    }, [auth.user?.access_token])
 
     const handleInputVisibility = () => {
         setInputVisible(!inputVisible);
@@ -76,7 +80,10 @@ const BuildingDetails = () => {
 
         const requestOptions = {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth.user?.access_token}`
+            },
             body: JSON.stringify({
                 name: buildingName,
                 address: buildingAddress,
@@ -114,7 +121,10 @@ const BuildingDetails = () => {
         let result = [];
         const requestOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth.user?.access_token}`
+            },
         };
         fetch('http://localhost:8082/v1/device/?building_id=' + location.state.building.id, requestOptions)
             .then(response => response.json())
@@ -124,10 +134,9 @@ const BuildingDetails = () => {
                 });
                 setDeviceList(result);
             });
-            console.log(building);
         setBuilding(location.state.building);
         // eslint-disable-next-line
-    }, [location, renderDevices])
+    }, [location, renderDevices, auth.user?.access_token])
 
     const clearForm = () => {
         setDeviceName("");
@@ -143,10 +152,13 @@ const BuildingDetails = () => {
             setDeviceNameError(true);
             return;
         }
-
+        console.log("location: ", location.state.building)
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth.user?.access_token}`
+            },
             body: JSON.stringify({
                 name: deviceName,
                 type: deviceType,
@@ -196,7 +208,10 @@ const BuildingDetails = () => {
     const removeDevice = (id) => {
         const requestOptions = {
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth.user?.access_token}`
+            },
         };
         fetch('http://localhost:8082/v1/device/' + id, requestOptions)
             .then(response => response.json())

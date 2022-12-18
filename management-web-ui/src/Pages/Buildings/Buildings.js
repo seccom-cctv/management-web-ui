@@ -10,9 +10,11 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'animate.css';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../../components/Navbar/Navbar'
+import { useAuth } from "react-oidc-context";
 
 const Buildings = () => {
 
+    const auth = useAuth();
     const [visible, setVisible] = useState(false);
     const [buildingsList, setBuildingsList] = useState([]);
     const [buildingName, setBuildingName] = useState("");
@@ -27,7 +29,10 @@ const Buildings = () => {
         let result = [];
         const requestOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth.user?.access_token}`
+            },
         };
         fetch('http://localhost:8082/v1/building/?company_id=' + location.state.company[0].id, requestOptions)
             .then(response => response.json())
@@ -37,7 +42,7 @@ const Buildings = () => {
                 });
                 setBuildingsList(result);
             });
-    }, [location])
+    }, [location, auth.user?.access_token])
 
     const clearForm = () => {
         setBuildingAddressError(false);
@@ -60,10 +65,14 @@ const Buildings = () => {
             setBuildingAddressError(true);
             return;
         }
+        console.log("location: ", location.state.company)
 
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth.user?.access_token}`
+            },
             body: JSON.stringify({
                 name: buildingName,
                 address: buildingAddress,

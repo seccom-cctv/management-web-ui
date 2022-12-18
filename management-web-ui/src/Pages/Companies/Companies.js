@@ -6,10 +6,12 @@ import { useEffect, useState } from "react";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../../components/Navbar/Navbar'
+import { useAuth } from "react-oidc-context";
+
 
 const Companies = () => {
 
-
+    const auth = useAuth();
     const [company, setCompany] = useState(null);
     const [inputVisible, setInputVisible] = useState(false);
     const [companyName, setCompanyName] = useState("");
@@ -46,22 +48,24 @@ const Companies = () => {
     useEffect(() => {
         const requestOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth.user?.access_token}`
+            },
         };
         fetch('http://localhost:8082/v1/company/?id=' + location.state.id, requestOptions)
             .then(response => response.json())
             .then(data => {
-                console.log(data)
                 setCompanyName(data[0].name);
                 setCompanyAddress(data[0].address);
                 setCompanyPhone(data[0].phone);
                 setCompanyEmail(data[0].email);
             });
         // eslint-disable-next-line
-    }, [])
+    }, [auth.user?.access_token])
 
     const handlePutCompany = () => {
-        if (!companyName || companyName.length <= 3 || companyName === "null") {
+        if (!companyName || companyName.length < 3 || companyName === "null") {
             toast.error('Company name cant be null!', {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2000
@@ -70,7 +74,7 @@ const Companies = () => {
             return;
         }
 
-        if (!companyAddress || companyAddress.length <= 3 || companyAddress === "null") {
+        if (!companyAddress || companyAddress.length < 3 || companyAddress === "null") {
             toast.error('Company address cant be null!', {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2000
@@ -79,7 +83,7 @@ const Companies = () => {
             return;
         }
 
-        if (!companyPhone || companyPhone.length <= 9 || companyPhone === "null") {
+        if (!companyPhone || companyPhone.length < 9 || companyPhone === "null") {
             toast.error('Company phone cant be null!', {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2000
@@ -88,7 +92,7 @@ const Companies = () => {
             return;
         }
 
-        if (!companyEmail || companyEmail.length <= 3 || companyEmail === "null") {
+        if (!companyEmail || companyEmail.length < 3 || companyEmail === "null") {
             toast.error('Company email cant be null!', {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2000
@@ -99,7 +103,10 @@ const Companies = () => {
 
         const requestOptions = {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth.user?.access_token}`
+            },
             body: JSON.stringify({
                 name: companyName,
                 address: companyAddress,
@@ -137,14 +144,17 @@ const Companies = () => {
         // get of company from id
         const requestOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth.user?.access_token}`
+            },
         };
         fetch('http://localhost:8082/v1/company/?id=' + location.state.id, requestOptions)
             .then(response => response.json())
             .then(data => {
                 setCompany(data);
             });
-    }, [location])
+    }, [auth.user?.access_token])
 
     return (
         <>
@@ -212,7 +222,7 @@ const Companies = () => {
                 </div>
             </div>
             <div className='companies-buttons'>
-                <AwesomeButton type="secondary" onPress={() => { setTimeout(() => window.location.replace("/users"), 500) }}>Manage Users</AwesomeButton>
+                <Link to={"/users"} state={{ company: company }}><AwesomeButton type="secondary">Manage Users</AwesomeButton></Link>
                 <Link to={"/buildings"} state={{ company: company }}><AwesomeButton type="secondary">Manage Buildings</AwesomeButton></Link>
                 {
                     !inputVisible &&
