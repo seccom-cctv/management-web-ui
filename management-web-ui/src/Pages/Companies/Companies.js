@@ -222,7 +222,7 @@ const Companies = () => {
                 </div>
             </div>
             <div className='companies-buttons'>
-                <AwesomeButton type="secondary" onPress={() => { setTimeout(() => window.location.replace("/users"), 500) }}>Manage Users</AwesomeButton>
+                <Link to={"/users"} state={{ company: company }}><AwesomeButton type="secondary">Manage Users</AwesomeButton></Link>
                 <Link to={"/buildings"} state={{ company: company }}><AwesomeButton type="secondary">Manage Buildings</AwesomeButton></Link>
                 {
                     !inputVisible &&
