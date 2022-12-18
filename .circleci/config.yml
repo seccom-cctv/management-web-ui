@@ -32,18 +32,18 @@ orbs:
 workflows:
   main:
     jobs:
-      - test
-      - build:
-          context: SonarCloud
-          requires:
-            - test
+      #- test
+      #- build:
+      #    context: SonarCloud
+      #    requires:
+      #      - test
       - aws-ecr/build-and-push-image:
           path: ./management-web-ui/
           region: ${AWS_REGION}
           repo: ${CIRCLE_PROJECT_REPONAME}
-          tag: ${CIRCLE_BUILD_NUM}
-          requires:
-            - test
+          tag: latest
+          #requires:
+          #  - test
           filters:
             branches:
               only:
