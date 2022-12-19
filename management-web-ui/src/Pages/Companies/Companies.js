@@ -53,7 +53,7 @@ const Companies = () => {
                 'Authorization': `Bearer ${auth.user?.access_token}`
             },
         };
-        fetch('http://localhost:8082/v1/company/?id=' + location.state.id, requestOptions)
+        fetch('https://1ffndug182.execute-api.us-east-1.amazonaws.com/test/sitesmanagement/v1/company/?id=' + location.state.id, requestOptions)
             .then(response => response.json())
             .then(data => {
                 setCompanyName(data[0].name);
@@ -115,7 +115,7 @@ const Companies = () => {
                 company_id: location.state.id
             })
         };
-        fetch('http://localhost:8082/v1/company/' + location.state.id, requestOptions)
+        fetch('https://1ffndug182.execute-api.us-east-1.amazonaws.com/test/sitesmanagement/v1/company/' + location.state.id, requestOptions)
             .then(response => response.json())
             .then(data => {
                 if (data) {
@@ -149,7 +149,7 @@ const Companies = () => {
                 'Authorization': `Bearer ${auth.user?.access_token}`
             },
         };
-        fetch('http://localhost:8082/v1/company/?id=' + location.state.id, requestOptions)
+        fetch('https://1ffndug182.execute-api.us-east-1.amazonaws.com/test/sitesmanagement/v1/company/?id=' + location.state.id, requestOptions)
             .then(response => response.json())
             .then(data => {
                 setCompany(data);
