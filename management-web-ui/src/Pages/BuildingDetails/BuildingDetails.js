@@ -152,7 +152,6 @@ const BuildingDetails = () => {
             setDeviceNameError(true);
             return;
         }
-        console.log("location: ", location.state.building)
         const requestOptions = {
             method: 'POST',
             headers: {
@@ -206,6 +205,7 @@ const BuildingDetails = () => {
     // }
 
     const removeDevice = (id) => {
+        console.log("location: ", location.state.building)
         const requestOptions = {
             method: 'DELETE',
             headers: {
@@ -222,6 +222,32 @@ const BuildingDetails = () => {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 2000
                     });
+                } else {
+                    toast.error('Something went wrong !', {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 2000
+                    });
+                }
+            })
+    };
+
+    const removeBulding = () => {
+        const requestOptions = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth.user?.access_token}`
+            },
+        };
+        fetch('https://1ffndug182.execute-api.us-east-1.amazonaws.com/test/sitesmanagement/v1/building/' + location.state.building.id, requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    toast.error('Building Removed !', {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 2000
+                    });
+                    setTimeout(() => window.location.replace("/companies/list"), 1000);
                 } else {
                     toast.error('Something went wrong !', {
                         position: toast.POSITION.TOP_RIGHT,
@@ -311,6 +337,7 @@ const BuildingDetails = () => {
                     }
                     <AwesomeButton type="primary" onPress={OpenModal}>New Device</AwesomeButton>
                     <AwesomeButton type="primary" onPress={() => navigate('/intrusions')}>View Intrusions</AwesomeButton>
+                    <AwesomeButton type="danger" onPress={removeBulding}>Remove Building</AwesomeButton>
                 </div>
                 <ul className="responsive-table" style={{ paddingLeft: 0 }}>
                     <li className="table-header">
