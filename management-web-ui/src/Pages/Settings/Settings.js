@@ -1,61 +1,89 @@
-import './Settings.css';
-import Navbar from '../../components/Navbar/Navbar';
-import { AccountContext } from '../../components/Account/Account';
-import { useContext, useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser, faKey, faLock, faBell } from '@fortawesome/free-solid-svg-icons';
+import './Settings.css'
+import user from './user.png';
+import { useState } from 'react';
 import { useAuth } from "react-oidc-context";
+import Profile from './components/Profile';
+import ScreenNavbar from '../../components/Navbar/Navbar';
+import { BallTriangle } from 'react-loader-spinner';
 
-
-const Settings = () => {
+const About = () => {
     const auth = useAuth();
+    const [active, setActive] = useState("profile");
 
-    const [newPassword, setNewPassword] = useState("");
-    const [password, setPassword] = useState("");
+    const selectChange = (value) => {
+        switch (value) {
+            case "profile":
+                setActive("profile");
+                break;
+            case "security":
+                setActive("security");
+                break;
+            default:
+                return;
+        }
+    };
 
-    const logout = () => {
-        window.location.replace("/");
+    const handleLogout = () => {
         auth.removeUser();
+        setTimeout(() => window.location.replace("/"), 1500);
     }
 
-    const onSubmit = (event) => {
-        event.preventDefault();
-    }
-
-    if (auth.isAuthenticated) {
+    if (auth.user?.access_token) {
     return (
-        <>  
-            <Navbar />
-            <div className="settings">
-            <h2 className="settings-header">Settings</h2>
-            <div>
-                <label>Current Email</label>
-                <p>{auth.user?.profile.email}</p>
-            </div>
-            <div>
-                <form onSubmit={onSubmit}>
-                <div className='login-modal-content'>
-                        <label htmlFor="current-password">Email</label>
-                        <input
-                            id="current-password"
-                            onChange={(event) => setPassword(event.target.value)}
-                            value={password}
-                        />
-
-                        <label htmlFor="new-password">New Password</label>
-                        <input
-                            id="new-password"
-                            onChange={(event) => setPassword(event.target.value)}
-                            value={newPassword}
-                        />
-                        <button type='submit'>Change Password</button>
+        <>
+            <ScreenNavbar />
+            <div className='about' data-testid="settings">
+                <div className="tab-items-wrapper">
+                    <div className="tab-items-account">
+                        <div className="tab-items-account-img-wrapper">
+                            <img src={user} alt="User" />
+                        </div>
+                        <h4 className="tab-items-account-name">{auth.user?.profile.name}</h4>
                     </div>
-                </form>
+                    <div className="tab-items-buttons">
+                        <div className="tab-items">
+                            <ul className="tab-items-list">
+                                <li onClick={() => selectChange("profile")} className={active === "profile" ? "tab-items-list-item-active" : "tab-items-list-item"}>
+                                    <FontAwesomeIcon icon={faUser} className="tab-item-icon" />Profile
+                                </li>
+                                <li onClick={() => selectChange("security")} className={active === "security" ? "tab-items-list-item-active" : "tab-items-list-item"}>
+                                    <FontAwesomeIcon icon={faKey} className="tab-item-icon" />Security
+                                </li>
+                            </ul>
+                        </div>
+                        <div className='logout-section'>
+                            <button onClick={handleLogout}>Logout</button>
+                        </div>
+                    </div>
+                </div>
+                <div className="notifications-wrapper">
+                    {active === "profile" && <p><Profile name={auth.user?.profile.name} email={auth.user?.profile.email} /></p>}
+                    {active === "security" && <p>Security</p>}
+                </div>
             </div>
-            </div>
-            <button onClick={logout}>Log out</button>
         </>
-    ) } else {
-        <div>Not authenticated</div>
+    )}
+    else {
+        return (
+            <>
+                <div className='loading-section'>
+                    <BallTriangle
+                        height={80}
+                        width={80}
+                        radius={5}
+                        color="#ccc"
+                        ariaLabel="ball-triangle-loading"
+                        wrapperClass={{}}
+                        wrapperStyle=""
+                        visible={true}
+                    />
+                    <p>Redirecting to Login...</p>
+                </div>
+            </>
+        )
     }
 }
 
-export default Settings;
+export default About;
