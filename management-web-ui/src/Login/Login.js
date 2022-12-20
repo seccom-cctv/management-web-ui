@@ -52,7 +52,7 @@ const Login = () => {
                 'Authorization': `Bearer ${token}`
             },
         };
-        fetch('http://localhost:8082/v1/company/', requestOptions)
+        fetch('https://gxdowy8at3.execute-api.eu-west-3.amazonaws.com/test/sitesmanagement/v1/company/', requestOptions)
             .then(response => response.json())
             .then(data => {
                 console.log(data);

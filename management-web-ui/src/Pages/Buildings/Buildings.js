@@ -34,7 +34,7 @@ const Buildings = () => {
                 'Authorization': `Bearer ${auth.user?.access_token}`
             },
         };
-        fetch('https://1ffndug182.execute-api.us-east-1.amazonaws.com/test/sitesmanagement/v1/building/?company_id=' + location.state.company[0].id, requestOptions)
+        fetch('https://gxdowy8at3.execute-api.eu-west-3.amazonaws.com/test/sitesmanagement/v1/building/?company_id=' + location.state.company[0].id, requestOptions)
             .then(response => response.json())
             .then(data => {
                 data.forEach((info) => {
@@ -79,7 +79,7 @@ const Buildings = () => {
                 company_id: location.state.company[0].id
             })
         };
-        fetch('https://1ffndug182.execute-api.us-east-1.amazonaws.com/test/sitesmanagement/v1/building/', requestOptions)
+        fetch('https://gxdowy8at3.execute-api.eu-west-3.amazonaws.com/test/sitesmanagement/v1/building/', requestOptions)
             .then(data => {
                 console.log(data.status);
                 if (data && parseInt(data.status) === 200) {

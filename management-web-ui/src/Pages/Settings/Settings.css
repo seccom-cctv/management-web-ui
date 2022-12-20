@@ -1,9 +1,95 @@
-.settings {
-    padding: 120px 8rem 2rem 8rem;
+.about {
+    margin: 8rem 6rem 3rem 6rem;
+    height: 35rem;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
 }
 
-.settings-header {
+.tab-items-account {
+    height: 40%;
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.tab-items-wrapper {
+    width: 16rem;
+    max-width: 16rem;
+    border-right: solid 1px #ccc;
+}
+
+.tab-items-account-img-wrapper {
+    height: 70%;
     width: 100%;
-    text-align: center;
-    font-size: 2.2rem;
+}
+
+.tab-items-account-img-wrapper img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+.tab-items-account-name {
+    height: 30%;
+}
+
+.tab-items-buttons {
+    height: 60%;
+    width: 100%;
+}
+
+.notifications-wrapper {
+    width: 100%;
+    padding-left: 4rem;
+    padding-top: 3rem;
+}
+
+.tab-items-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.tab-items-list li {
+    font-size: 18px;
+    padding: 0.7rem 0.5rem;
+    border: solid 1px #ccc;
+    padding-left: 2rem;
+}
+
+.tab-items-list li:hover {
+    cursor: pointer;
+    background-color: rgb(236, 215, 215);
+    transition: 0.2s;
+} 
+
+.tab-item-icon {
+    margin-right: 0.5rem;
+}
+
+.tab-items-list-item-active {
+    background-color: rgb(236, 215, 215);
+}
+
+.logout-section {
+    width: 80%;
+    background-color: yellow;
+    margin: 4rem 10%;
+}
+
+.logout-section button {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    outline: none;
+    border: solid 1.2px #ccc;
+    background-color: #fff;
+}
+
+.logout-section button:hover {
+    background-color: #ccc;
+    transition: 0.2s ease-in-out;
 }
