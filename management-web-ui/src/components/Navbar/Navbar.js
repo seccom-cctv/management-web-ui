@@ -34,7 +34,7 @@ const ScreenNavbar = () => {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto" style={{padding: "0 2rem"}}>
                         <Nav.Link style={{paddingLeft: "1rem", paddingRight: "1rem"}}>
-                            <Link className='navbar-item navbar-item-change' to="/companies/list">Home</Link>
+                            <Link className='navbar-item navbar-item-change' to="/companies/list">Companies</Link>
                         </Nav.Link>
                         
                         <Nav.Link style={{paddingLeft: "1rem", paddingRight: "1rem"}}>

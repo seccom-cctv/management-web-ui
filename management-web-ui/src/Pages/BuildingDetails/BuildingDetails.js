@@ -36,7 +36,7 @@ const BuildingDetails = () => {
                 'Authorization': `Bearer ${auth.user?.access_token}`
             },
         };
-        fetch('https://1ffndug182.execute-api.us-east-1.amazonaws.com/test/sitesmanagement/v1/building/?id=' + location.state.building.id, requestOptions)
+        fetch('https://gxdowy8at3.execute-api.eu-west-3.amazonaws.com/test/sitesmanagement/v1/building/?id=' + location.state.building.id, requestOptions)
             .then(response => response.json())
             .then(data => {
                 setBuildingName(data[0].name);
@@ -90,7 +90,7 @@ const BuildingDetails = () => {
                 company_id: location.state.building.company_id
             })
         };
-        fetch('https://1ffndug182.execute-api.us-east-1.amazonaws.com/test/sitesmanagement/v1/building/' + location.state.building.id, requestOptions)
+        fetch('https://gxdowy8at3.execute-api.eu-west-3.amazonaws.com/test/sitesmanagement/v1/building/' + location.state.building.id, requestOptions)
             .then(response => response.json())
             .then(data => {
                 if (data) {
@@ -126,7 +126,7 @@ const BuildingDetails = () => {
                 'Authorization': `Bearer ${auth.user?.access_token}`
             },
         };
-        fetch('https://1ffndug182.execute-api.us-east-1.amazonaws.com/test/sitesmanagement/v1/device/?building_id=' + location.state.building.id, requestOptions)
+        fetch('https://gxdowy8at3.execute-api.eu-west-3.amazonaws.com/test/sitesmanagement/v1/device/?building_id=' + location.state.building.id, requestOptions)
             .then(response => response.json())
             .then(data => {
                 data.forEach((info) => {
@@ -164,7 +164,7 @@ const BuildingDetails = () => {
                 building_id: location.state.building.id
             })
         };
-        fetch('https://1ffndug182.execute-api.us-east-1.amazonaws.com/test/sitesmanagement/v1/device/', requestOptions)
+        fetch('https://gxdowy8at3.execute-api.eu-west-3.amazonaws.com/test/sitesmanagement/v1/device/', requestOptions)
             .then(response => response.json())
             .then(data => {
                 if (data) {
@@ -213,7 +213,7 @@ const BuildingDetails = () => {
                 'Authorization': `Bearer ${auth.user?.access_token}`
             },
         };
-        fetch('https://1ffndug182.execute-api.us-east-1.amazonaws.com/test/sitesmanagement/v1/device/' + id, requestOptions)
+        fetch('https://gxdowy8at3.execute-api.eu-west-3.amazonaws.com/test/sitesmanagement/v1/device/' + id, requestOptions)
             .then(response => response.json())
             .then(data => {
                 if (data) {
@@ -239,7 +239,7 @@ const BuildingDetails = () => {
                 'Authorization': `Bearer ${auth.user?.access_token}`
             },
         };
-        fetch('https://1ffndug182.execute-api.us-east-1.amazonaws.com/test/sitesmanagement/v1/building/' + location.state.building.id, requestOptions)
+        fetch('https://gxdowy8at3.execute-api.eu-west-3.amazonaws.com/test/sitesmanagement/v1/building/' + location.state.building.id, requestOptions)
             .then(response => response.json())
             .then(data => {
                 if (data) {

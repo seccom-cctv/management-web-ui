@@ -27,7 +27,7 @@ const Home = () => {
                 'Authorization': `Bearer ${token}`
             },
         };
-        fetch('https://1ffndug182.execute-api.us-east-1.amazonaws.com/test/sitesmanagement/v1/company', requestOptions)
+        fetch('https://gxdowy8at3.execute-api.eu-west-3.amazonaws.com/test/sitesmanagement/v1/company', requestOptions)
             .then(response => response.json())
             .then(data => {
                 console.log(data)
@@ -124,7 +124,7 @@ const Home = () => {
                 email: companyEmail
             })
         };
-        fetch('https://1ffndug182.execute-api.us-east-1.amazonaws.com/test/sitesmanagement/v1/company/', requestOptions)
+        fetch('https://gxdowy8at3.execute-api.eu-west-3.amazonaws.com/test/sitesmanagement/v1/company/', requestOptions)
             .then(response => response.json())
             .then(data => {
                 if (data) {
