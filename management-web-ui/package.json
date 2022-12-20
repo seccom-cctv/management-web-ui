@@ -76,5 +76,6 @@
       "**/*.steps.js",
       "**/*.test.js"
     ]
-  }
+  },
+  "homepage": "./"
 }

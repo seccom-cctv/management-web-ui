@@ -8,9 +8,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useEffect, useState } from 'react';
 import 'animate.css';
 import { useLocation } from 'react-router-dom';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar/Navbar'
 import { useAuth } from "react-oidc-context";
+import { DeviceDesktopIcon } from '@primer/octicons-react';
 
 
 const BuildingDetails = () => {
@@ -20,6 +21,7 @@ const BuildingDetails = () => {
     const [deviceName, setDeviceName] = useState("");
     const [deviceNameError, setDeviceNameError] = useState(false);
     //const [deviceAddress, setDeviceAddress] = useState("");
+    const [devicesId, setDeviceId] = useState(0);
     const [devicesList, setDeviceList] = useState(null);
     const [building, setBuilding] = useState(null);
     const [renderDevices, setRenderDevices] = useState(false);
@@ -57,6 +59,11 @@ const BuildingDetails = () => {
     const handleBuildingAddress = (event) => {
         var str = event.target.value;
         setBuildingAddress(str);
+    }
+
+    const handleDeviceId = (event) => {
+        var str = event.target.value;
+        setDeviceId(parseInt(str));
     }
 
     const handlePutBuilding = () => {
@@ -130,6 +137,7 @@ const BuildingDetails = () => {
             .then(response => response.json())
             .then(data => {
                 data.forEach((info) => {
+                    console.log(info.name)
                     result.push(<BuildingTableRow key={info.id} device={info.name} date="29/10/2022" health="10%" onClick={() => { removeDevice(info.id) }} />);
                 });
                 setDeviceList(result);
@@ -161,6 +169,7 @@ const BuildingDetails = () => {
             body: JSON.stringify({
                 name: deviceName,
                 type: deviceType,
+                id: devicesId,
                 building_id: location.state.building.id
             })
         };
@@ -276,6 +285,8 @@ const BuildingDetails = () => {
                     <div className='device-modal'>
                         <h1 className='device-modal-title'>Add New Device</h1>
                         <div className='device-modal-content'>
+                            <label htmlFor="device-name">ID</label>
+                            <input style={{ marginBottom: "0.5rem" }} id='device-name' type="number" value={devicesId} onChange={handleDeviceId} placeholder="Device id..." />
                             <label htmlFor="device-name">Type</label>
                             <select
                                 id="device-type"
